@@ -1,0 +1,48 @@
+{
+  "React Functional Component": {
+    "prefix": "rfcc",
+    "body": [
+      "interface Props{};",
+      "",
+      "export function ${TM_FILENAME_BASE}({}: Props){",
+      "  return (",
+      "      <h1>${TM_FILENAME_BASE} Component</h1>",
+      "  );",
+      "};",
+      ""
+    ],
+    "description": "Crea un componente funcional en React sin el import"
+  },
+  "React Functional Component Not Props": {
+    "prefix": "rfc",
+    "body": [
+      "export function ${TM_FILENAME_BASE}(){",
+      "  return (",
+      "      <h1>${TM_FILENAME_BASE} Component</h1>",
+      "  );",
+      "};",
+      ""
+    ],
+    "description": "Crea un componente funcional en React sin el import"
+  },
+  "Import Statement": {
+    "prefix": "imp",
+    "body": ["import { ${2:moduleName} } from '${1:path}';"],
+    "description": "Inserta una declaración de importación"
+  },
+  "Console Log": {
+    "prefix": "clg",
+    "body": ["console.log(${1:});"],
+    "description": "Inserta un console.log"
+  },
+  "Use Effect Hook": {
+    "prefix": "uef",
+    "body": ["useEffect(() => {", "  ${1:// code}", "}, [$2]);"],
+    "description": "Crea un hook useEffect"
+  },
+  "Barrel File": {
+    "prefix": "bf",
+    "body": ["export * from './${1:nameFile}';"],
+    "description": "Para crear un barrel file"
+  }
+}
