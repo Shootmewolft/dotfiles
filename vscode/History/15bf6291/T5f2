@@ -23,7 +23,7 @@ window-decoration = true
 window-padding-color = extend
 window-step-resize = false
 window-padding-balance = true
-window-height = 30
+window-height = 100
 window-width = 100
 
 gtk-tabs-location = hidden

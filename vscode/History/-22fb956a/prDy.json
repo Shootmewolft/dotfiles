@@ -1,5 +1,5 @@
 {
-    "editor.matchBrackets": false,
+    "editor.matchBrackets": "never",
     "workbench.iconTheme": "a-file-icon-vscode",
     "editor.minimap.enabled": false,
     "explorer.confirmDelete": false
