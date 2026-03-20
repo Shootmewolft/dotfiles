@@ -1,0 +1,7 @@
+[user]
+	name = alvar.dev
+	email = alvaropedrozo07@gmail.com
+[pull]
+	rebase = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
