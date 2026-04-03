@@ -5,6 +5,8 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
 
+eval "$(fnm env --shell zsh)"
+
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
@@ -58,6 +60,13 @@ alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
 alias v='nvim'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # PATH
 export PATH="$HOME/.local/bin:$PATH"
+# opencode
+export PATH=/home/shoot/.opencode/bin:$PATH

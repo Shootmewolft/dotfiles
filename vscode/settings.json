@@ -48,7 +48,7 @@
   "editor.fontVariations": false,
   "editor.fontFamily": "'IosevkaTerm Nerd Font'",
   "editor.fontLigatures": true,
-  "editor.matchBrackets": "never",
+  "editor.matchBrackets": false,
   "editor.glyphMargin": true,
   "editor.smoothScrolling": true,
   "workbench.list.smoothScrolling": true,
