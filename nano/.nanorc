@@ -1,0 +1,30 @@
+# Editor:
+set tabsize 2      # set tab-to-spaces size to 2
+set tabstospaces   # convert TAB key press to spaces
+set trimblanks     # trim extra spaces
+
+set softwrap       # enable softwrap of lines
+set atblanks       # wrap line at blanks
+set constantshow
+set nohelp         # disable help, CTRL+G to view it
+set autoindent     # next line will have the same indent as the current one
+set historylog     # save the last 100 history searches for later use
+set positionlog    # save the cursor position between editing sessions
+set zap            # highlight text (CTRL+SHIFT+ARROW) and delete it with backspace
+set cutfromcursor  # cut to end of line with CTRL+K
+set indicator      # display a scroll bar on the right
+set minibar        # information in the bottom bar, removes top bar
+
+# line numbers are copied with text, it is not useful:
+set linenumbers
+
+# Syntax highlight:
+include /usr/share/nano/*.nanorc
+include /usr/share/nano/extra/*.nanorc
+
+# Hotkeys:
+# Full list: https://www.nano-editor.org/dist/latest/cheatsheet.html
+
+unbind ^w main
+bind ^f whereis main
+bind ^z undo main
