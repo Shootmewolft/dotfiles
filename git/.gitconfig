@@ -1,3 +1,5 @@
+[init]
+  defaultBranch = main
 [user]
 	name = alvar.dev
 	email = alvaropedrozo07@gmail.com

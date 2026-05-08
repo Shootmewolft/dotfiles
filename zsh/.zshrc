@@ -23,6 +23,9 @@ colors
 # Prompt simple
 PROMPT='%F{blue}%n@%m%f %F{green}%~%f '
 
+# Bun
+export PATH="/home/shoot/.bun/bin:$PATH"
+
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME=""
@@ -55,16 +58,17 @@ fi
 # Aliases
 alias ll='ls -lah'
 alias la='ls -A'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias v='nvim'
+alias gpo='git pull origin'
+alias gc='git checkout'
+alias nv='nvim'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
+alias ..='z ..'
+alias ...='z ../..'
+alias ....='z ../../..'
+alias pkl='port-kill --list'
+alias pk='port-kill'
+alias cd='z'
 
 # PATH
 export PATH="$HOME/.local/bin:$PATH"

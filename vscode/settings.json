@@ -16,6 +16,10 @@
   "indenticator.color.dark": "rgba(255,255,255,0.05)",
   "workbench.statusBar.visible": false,
   "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
+  },
   "window.zoomLevel": 0.7,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
@@ -48,7 +52,7 @@
   "editor.fontVariations": false,
   "editor.fontFamily": "'IosevkaTerm Nerd Font'",
   "editor.fontLigatures": true,
-  "editor.matchBrackets": "never",
+  "editor.matchBrackets": false,
   "editor.glyphMargin": true,
   "editor.smoothScrolling": true,
   "workbench.list.smoothScrolling": true,
@@ -278,15 +282,28 @@
   "telemetry.feedback.enabled": false,
   "github.copilot.nextEditSuggestions.enabled": true,
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "terminal.integrated.initialHint": false,
   "json.schemaDownload.trustedDomains": {
-    "https://schemastore.azurewebsites.net/": true,
-    "https://raw.githubusercontent.com/": true,
-    "https://www.schemastore.org/": true,
-    "https://json.schemastore.org/": true,
+    "https://biomejs.dev": true,
+    "https://developer.microsoft.com/json-schemas/": true,
     "https://json-schema.org/": true,
-    "https://biomejs.dev": true
-  }
+    "https://json.schemastore.org/": true,
+    "https://raw.githubusercontent.com/": true,
+    "https://raw.githubusercontent.com/devcontainers/spec/": true,
+    "https://raw.githubusercontent.com/microsoft/vscode/": true,
+    "https://schemastore.azurewebsites.net/": true,
+    "https://turborepo.dev": true,
+    "https://www.schemastore.org/": true
+  },
+  "terminal.integrated.allowedLinkSchemes": [
+    "file",
+    "http",
+    "https",
+    "mailto",
+    "vscode",
+    "vscode-insiders",
+    "app/(root)/(tabs)/_layout.tsx"
+  ]
 }
