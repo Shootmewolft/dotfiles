@@ -1,0 +1,104 @@
+filekinds:
+  normal:
+    foreground: White
+  directory:
+    foreground: Blue
+    is_bold: true
+  symlink:
+    foreground: Cyan
+  executable:
+    foreground: Green
+perms:
+  user_read:
+    foreground: Yellow
+  user_write:
+    foreground: Red
+  user_execute_file:
+    foreground: Green
+    is_bold: true
+  user_execute_other:
+    foreground: Green
+    is_bold: true
+  group_read:
+    foreground: Yellow
+  group_write:
+    foreground: Red
+  group_execute:
+    foreground: Green
+  other_read:
+    foreground: Yellow
+  other_write:
+    foreground: Red
+  other_execute:
+    foreground: Green
+size:
+  number_byte:
+    foreground: Green
+  number_kilo:
+    foreground: Green
+    is_bold: true
+  number_mega:
+    foreground: Yellow
+  number_giga:
+    foreground: Yellow
+    is_bold: true
+  number_huge:
+    foreground: Red
+    is_bold: true
+  unit_byte:
+    foreground: Green
+    is_dimmed: true
+  unit_kilo:
+    foreground: Green
+    is_dimmed: true
+  unit_mega:
+    foreground: Yellow
+    is_dimmed: true
+  unit_giga:
+    foreground: Yellow
+    is_dimmed: true
+  unit_huge:
+    foreground: Red
+    is_dimmed: true
+users:
+  user_you:
+    foreground: Magenta
+    is_bold: true
+  user_root:
+    foreground: Red
+    is_bold: true
+  user_other:
+    foreground: Yellow
+  group_yours:
+    foreground: Magenta
+  group_other:
+    foreground: Yellow
+date:
+  foreground: Cyan
+punctuation:
+  foreground: White
+  is_dimmed: true
+git:
+  new:
+    foreground: Green
+  modified:
+    foreground: Yellow
+  deleted:
+    foreground: Red
+  renamed:
+    foreground: Blue
+  ignored:
+    foreground: White
+    is_dimmed: true
+  conflicted:
+    foreground: Magenta
+git_repo:
+  branch_main:
+    foreground: Green
+    is_bold: true
+  branch_other:
+    foreground: Yellow
+  git_clean:
+    foreground: Green
+  git_dirty:
+    foreground: Red
