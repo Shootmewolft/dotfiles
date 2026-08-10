@@ -1,12 +1,4 @@
 {
-	"inputs": [
-		{
-			"id": "CONTEXT7_API_KEY",
-			"type": "promptString",
-			"description": "API key for authentication",
-			"password": true
-		}
-	],
 	"servers": {
 		"sequential-thinking": {
 			"command": "npx",
@@ -44,6 +36,18 @@
 			"url": "https://api.githubcopilot.com/mcp/",
 			"gallery": "https://api.mcp.github.com",
 			"version": "1.0.3"
+		},
+		"figma-mcp": {
+			"url": "https://mcp.figma.com/mcp",
+			"type": "http"
 		}
-	}
+	},
+	"inputs": [
+		{
+			"id": "CONTEXT7_API_KEY",
+			"type": "promptString",
+			"description": "API key for authentication",
+			"password": true
+		}
+	]
 }

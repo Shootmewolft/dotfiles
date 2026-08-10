@@ -1,159 +1,37 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "agent": {
-    "sdd-apply": {
-      "description": "Implement code changes from task definitions",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the apply phase. Read your skill file at ~/.config/opencode/skills/sdd-apply/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-archive": {
-      "description": "Archive completed change artifacts",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the archive phase. Read your skill file at ~/.config/opencode/skills/sdd-archive/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-design": {
-      "description": "Create technical design from proposals",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the design phase. Read your skill file at ~/.config/opencode/skills/sdd-design/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-explore": {
-      "description": "Investigate codebase and think through ideas",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the explore phase. Read your skill file at ~/.config/opencode/skills/sdd-explore/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-init": {
-      "description": "Bootstrap SDD context and project configuration",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the init phase. Read your skill file at ~/.config/opencode/skills/sdd-init/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-orchestrator": {
-      "description": "Agent Teams Orchestrator - coordinates sub-agents, never does work inline",
-      "mode": "primary",
-      "permission": {
-        "task": {
-          "*": "deny",
-          "sdd-*": "allow"
-        }
-      },
-      "prompt": "{file:./AGENTS.md}",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-propose": {
-      "description": "Create change proposals from explorations",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the propose phase. Read your skill file at ~/.config/opencode/skills/sdd-propose/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-spec": {
-      "description": "Write detailed specifications from proposals",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the spec phase. Read your skill file at ~/.config/opencode/skills/sdd-spec/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-tasks": {
-      "description": "Break down specs and designs into implementation tasks",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the tasks phase. Read your skill file at ~/.config/opencode/skills/sdd-tasks/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    },
-    "sdd-verify": {
-      "description": "Validate implementation against specs",
-      "hidden": true,
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "prompt": "You are an SDD sub-agent for the verify phase. Read your skill file at ~/.config/opencode/skills/sdd-verify/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
-      "tools": {
-        "bash": true,
-        "edit": true,
-        "read": true,
-        "write": true
-      }
-    }
-  },
+
   "autoupdate": true,
-  "mcp": {
-    "context7": {
-      "enabled": true,
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp"
+
+  "provider": {
+    "openrouter": {
+      "options": {
+        "timeout": 600000,
+        "chunkTimeout": 30000
+      },
+      "models": {
+        "anthropic/claude-sonnet-4.6": {
+          "options": {
+            "provider": {
+              "order": ["anthropic"],
+              "allow_fallbacks": true
+            }
+          }
+        },
+        "anthropic/claude-haiku-4.6": {},
+        "openai/gpt-5.1-codex": {},
+        "openai/gpt-5.1": {},
+        "google/gemini-3-pro-preview": {},
+        "qwen/qwen3-coder-next": {},
+        "qwen/qwen3-coder:free": {}
+      }
     }
   },
+
+  "model": "openrouter/anthropic/claude-sonnet-4.6",
+  "small_model": "openrouter/anthropic/claude-haiku-4.6",
+
   "permission": {
-    "bash": {
-      "*": "allow",
-      "git commit *": "ask",
-      "git push": "ask",
-      "git push *": "ask",
-      "git push --force *": "ask",
-      "git rebase *": "ask",
-      "git reset --hard *": "ask"
-    },
     "read": {
       "*": "allow",
       "**/.env": "deny",
@@ -162,7 +40,388 @@
       "**/secrets/**": "deny",
       "*.env": "deny",
       "*.env.*": "deny"
+    },
+    "edit": "ask",
+    "bash": {
+      "*": "ask",
+      "ls *": "allow",
+      "pwd": "allow",
+      "cat *": "allow",
+      "grep *": "allow",
+      "rg *": "allow",
+      "find *": "allow",
+      "git status *": "allow",
+      "git diff *": "allow",
+      "git log *": "allow",
+      "npm test *": "allow",
+      "npm run test *": "allow",
+      "npm run lint *": "allow",
+      "npm run typecheck *": "allow",
+      "bun test *": "allow",
+      "bun run test *": "allow",
+      "bun run lint *": "allow",
+      "bun run typecheck *": "allow",
+      "git commit *": "ask",
+      "git push": "ask",
+      "git push *": "ask",
+      "git push --force *": "ask",
+      "git rebase *": "ask",
+      "git reset --hard *": "ask",
+      "rm -rf *": "ask"
+    },
+    "webfetch": "allow",
+    "websearch": "allow",
+    "lsp": "allow",
+    "skill": "allow",
+    "todowrite": "allow"
+  },
+
+  "agent": {
+    "sdd-orchestrator": {
+      "description": "Agent Teams Orchestrator - coordinates sub-agents, never does work inline",
+      "mode": "primary",
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "prompt": "{file:./AGENTS.md}",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "deny",
+        "bash": "deny",
+        "task": {
+          "*": "deny",
+          "sdd-*": "allow",
+          "review-*": "allow",
+          "frontend-*": "allow",
+          "qa-*": "allow",
+          "docs-*": "allow"
+        },
+        "todowrite": "allow",
+        "skill": "allow",
+        "question": "allow"
+      }
+    },
+
+    "sdd-init": {
+      "description": "Bootstrap SDD context and project configuration",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/anthropic/claude-haiku-4.6",
+      "prompt": "You are an SDD sub-agent for the init phase. Read your skill file at ~/.config/opencode/skills/sdd-init/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "ask",
+        "skill": "allow"
+      }
+    },
+
+    "sdd-explore": {
+      "description": "Investigate codebase and think through ideas",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/anthropic/claude-haiku-4.6",
+      "prompt": "You are an SDD sub-agent for the explore phase. Read your skill file at ~/.config/opencode/skills/sdd-explore/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git status *": "allow",
+          "git diff *": "allow",
+          "rg *": "allow",
+          "find *": "allow",
+          "ls *": "allow",
+          "pwd": "allow"
+        },
+        "webfetch": "allow",
+        "skill": "allow"
+      }
+    },
+
+    "sdd-propose": {
+      "description": "Create change proposals from explorations",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "prompt": "You are an SDD sub-agent for the propose phase. Read your skill file at ~/.config/opencode/skills/sdd-propose/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "ask",
+        "skill": "allow"
+      }
+    },
+
+    "sdd-spec": {
+      "description": "Write detailed specifications from proposals",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/google/gemini-3-pro-preview",
+      "prompt": "You are an SDD sub-agent for the spec phase. Read your skill file at ~/.config/opencode/skills/sdd-spec/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "deny",
+        "skill": "allow"
+      }
+    },
+
+    "sdd-design": {
+      "description": "Create technical design from proposals",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/google/gemini-3-pro-preview",
+      "prompt": "You are an SDD sub-agent for the design phase. Read your skill file at ~/.config/opencode/skills/sdd-design/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "ask",
+        "skill": "allow"
+      }
+    },
+
+    "sdd-tasks": {
+      "description": "Break down specs and designs into implementation tasks",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "prompt": "You are an SDD sub-agent for the tasks phase. Read your skill file at ~/.config/opencode/skills/sdd-tasks/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "ask",
+        "skill": "allow"
+      }
+    },
+
+    "sdd-apply": {
+      "description": "Implement code changes from task definitions",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/openai/gpt-5.1-codex",
+      "prompt": "You are an SDD sub-agent for the apply phase. Read your skill file at ~/.config/opencode/skills/sdd-apply/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "git status *": "allow",
+          "git diff *": "allow",
+          "npm test *": "allow",
+          "npm run test *": "allow",
+          "npm run lint *": "allow",
+          "npm run typecheck *": "allow",
+          "bun test *": "allow",
+          "bun run test *": "allow",
+          "bun run lint *": "allow",
+          "bun run typecheck *": "allow"
+        },
+        "lsp": "allow",
+        "skill": "allow",
+        "todowrite": "allow"
+      }
+    },
+
+    "sdd-verify": {
+      "description": "Validate implementation against specs",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/openai/gpt-5.1-codex",
+      "prompt": "You are an SDD sub-agent for the verify phase. Read your skill file at ~/.config/opencode/skills/sdd-verify/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "git status *": "allow",
+          "git diff *": "allow",
+          "npm test *": "allow",
+          "npm run test *": "allow",
+          "npm run lint *": "allow",
+          "npm run typecheck *": "allow",
+          "bun test *": "allow",
+          "bun run test *": "allow",
+          "bun run lint *": "allow",
+          "bun run typecheck *": "allow"
+        },
+        "lsp": "allow",
+        "skill": "allow"
+      }
+    },
+
+    "sdd-archive": {
+      "description": "Archive completed change artifacts",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "openrouter/anthropic/claude-haiku-4.6",
+      "prompt": "You are an SDD sub-agent for the archive phase. Read your skill file at ~/.config/opencode/skills/sdd-archive/SKILL.md and follow its instructions. It includes a Step 1 for loading the skill registry — do NOT skip it.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "git status *": "allow",
+          "git diff *": "allow"
+        },
+        "skill": "allow"
+      }
+    },
+
+    "review-security": {
+      "description": "Review code for security issues, secrets exposure, unsafe auth flows and risky dependency usage",
+      "hidden": false,
+      "mode": "subagent",
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "prompt": "You are a security review sub-agent. Review code for auth flaws, exposed secrets, unsafe data handling, dependency risks, injection risks, and insecure client-side assumptions. Do not modify files unless explicitly asked. Produce findings with severity, file references, and concrete fixes.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git status *": "allow",
+          "git diff *": "allow",
+          "rg *": "allow",
+          "find *": "allow"
+        },
+        "webfetch": "allow"
+      }
+    },
+
+    "frontend-ui": {
+      "description": "Implement and review frontend UI, React components, styling, accessibility and design-system consistency",
+      "hidden": false,
+      "mode": "subagent",
+      "model": "openrouter/openai/gpt-5.1-codex",
+      "prompt": "You are a frontend implementation sub-agent. Focus on React, TypeScript, component structure, styling consistency, accessibility, state management, and maintainable UI changes. Prefer minimal, well-scoped edits.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "npm run lint *": "allow",
+          "npm run typecheck *": "allow",
+          "npm test *": "allow",
+          "bun run lint *": "allow",
+          "bun run typecheck *": "allow",
+          "bun test *": "allow"
+        },
+        "lsp": "allow"
+      }
+    },
+
+    "docs-writer": {
+      "description": "Write project documentation, READMEs, changelogs and implementation notes",
+      "hidden": false,
+      "mode": "subagent",
+      "model": "openrouter/anthropic/claude-haiku-4.6",
+      "prompt": "You are a documentation sub-agent. Write concise, accurate developer documentation. Preserve existing project tone and structure. Do not invent behavior not present in code.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "deny"
+      }
+    },
+
+    "qa-test": {
+      "description": "Create and run tests for changed behavior",
+      "hidden": false,
+      "mode": "subagent",
+      "model": "openrouter/openai/gpt-5.1-codex",
+      "prompt": "You are a QA/test sub-agent. Identify missing coverage, add focused tests, run the relevant test/lint/typecheck commands, and report failures clearly. Prefer narrow tests close to the changed code.",
+      "permission": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "npm test *": "allow",
+          "npm run test *": "allow",
+          "npm run lint *": "allow",
+          "npm run typecheck *": "allow",
+          "bun test *": "allow",
+          "bun run test *": "allow",
+          "bun run lint *": "allow",
+          "bun run typecheck *": "allow"
+        },
+        "lsp": "allow"
+      }
     }
   },
-  "plugin": ["opencode-gemini-auth@latest"]
+
+  "mcp": {
+    "context7": {
+      "enabled": true,
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "engram": {
+      "command": ["/home/shoot/.local/bin/engram", "mcp", "--tools=agent"],
+      "enabled": true,
+      "type": "local"
+    },
+    "figma": {
+      "type": "local",
+      "enabled": false,
+      "command": [
+        "npx",
+        "-y",
+        "figma-developer-mcp",
+        "--stdio"
+      ],
+      "timeout": 60000
+    }
+  },
+
+  "plugin": ["opencode-gemini-auth@latest"],
+
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".next/**",
+      ".git/**",
+      "coverage/**"
+    ]
+  }
 }

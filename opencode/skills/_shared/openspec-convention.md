@@ -11,7 +11,7 @@ openspec/
 └── changes/                 <- Active changes
     ├── archive/             <- Completed changes (YYYY-MM-DD-{change-name}/)
     └── {change-name}/       <- Active change folder
-        ├── state.yaml       <- DAG state (orchestrator, survives compaction)
+        ├── state.yaml       <- DAG state (survives compaction)
         ├── exploration.md   <- (optional) from sdd-explore
         ├── proposal.md      <- from sdd-propose
         ├── specs/           <- from sdd-spec
@@ -26,7 +26,7 @@ openspec/
 
 | Skill | Creates / Reads | Path |
 |-------|----------------|------|
-| orchestrator | Creates/Updates | `openspec/changes/{change-name}/state.yaml` (DAG state for compaction recovery) |
+| orchestrator | Creates/Updates | `openspec/changes/{change-name}/state.yaml` |
 | sdd-init | Creates | `openspec/config.yaml`, `openspec/specs/`, `openspec/changes/`, `openspec/changes/archive/` |
 | sdd-explore | Creates (optional) | `openspec/changes/{change-name}/exploration.md` |
 | sdd-propose | Creates | `openspec/changes/{change-name}/proposal.md` |
@@ -40,24 +40,38 @@ openspec/
 
 ## Reading Artifacts
 
-Each skill reads its dependencies from the filesystem:
-
 ```
-Proposal:  openspec/changes/{change-name}/proposal.md
-Specs:     openspec/changes/{change-name}/specs/  (all domain subdirectories)
-Design:    openspec/changes/{change-name}/design.md
-Tasks:     openspec/changes/{change-name}/tasks.md
-Verify:    openspec/changes/{change-name}/verify-report.md
-Config:    openspec/config.yaml
+Proposal:   openspec/changes/{change-name}/proposal.md
+Specs:      openspec/changes/{change-name}/specs/  (all domain subdirectories)
+Design:     openspec/changes/{change-name}/design.md
+Tasks:      openspec/changes/{change-name}/tasks.md
+Verify:     openspec/changes/{change-name}/verify-report.md
+Config:     openspec/config.yaml
 Main specs: openspec/specs/{domain}/spec.md
 ```
 
 ## Writing Rules
 
-- ALWAYS create the change directory (`openspec/changes/{change-name}/`) before writing artifacts
+- Always create the change directory before writing artifacts
 - If a file already exists, READ it first and UPDATE it (don't overwrite blindly)
 - If the change directory already exists with artifacts, the change is being CONTINUED
-- Use the `openspec/config.yaml` `rules` section to apply project-specific constraints per phase
+- Use `openspec/config.yaml` `rules` section for project-specific constraints per phase
+
+## Delta Spec Sections
+
+Delta specs MAY include these sections:
+
+```markdown
+## ADDED Requirements
+## MODIFIED Requirements
+## REMOVED Requirements
+## RENAMED Requirements
+```
+
+- `ADDED` appends new requirements to the main spec.
+- `MODIFIED` replaces the full matching requirement block in the main spec. The delta MUST contain the entire updated requirement, including unchanged scenarios that must be preserved.
+- `REMOVED` deletes the matching requirement from the main spec. Each removed requirement MUST include `(Reason: ...)` and SHOULD include `(Migration: ...)` when consumers or persisted behavior are affected.
+- `RENAMED` changes a requirement heading/name without changing behavior unless the delta also includes a `MODIFIED` block for the new requirement. Each rename MUST state old and new names explicitly.
 
 ## Config File Reference
 
@@ -84,13 +98,14 @@ rules:
     - Group by phase, use hierarchical numbering
     - Keep tasks completable in one session
   apply:
-    - Follow existing code patterns
+    guidelines:
+      - Follow existing code patterns
     tdd: false           # Set to true to enable RED-GREEN-REFACTOR
-    test_command: ""     # e.g., "npm test", "pytest"
+    test_command: ""
   verify:
-    test_command: ""     # Override for verification
-    build_command: ""    # Override for build check
-    coverage_threshold: 0  # Set > 0 to enable coverage check
+    test_command: ""
+    build_command: ""
+    coverage_threshold: 0
   archive:
     - Warn before merging destructive deltas
 ```

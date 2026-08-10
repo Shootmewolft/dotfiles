@@ -112,7 +112,7 @@ Singleton {
                     property string numbers: "Google Sans Flex"
                     property string title: "Google Sans Flex"
                     property string iconNerd: "JetBrains Mono NF"
-                    property string monospace: "JetBrains Mono NF"
+                    property string monospace: "IosevkaTerm NF"
                     property string reading: "Readex Pro"
                     property string expressive: "Space Grotesk"
                 }
@@ -125,7 +125,7 @@ Singleton {
                 property JsonObject wallpaperTheming: JsonObject {
                     property bool enableAppsAndShell: true
                     property bool enableQtApps: false
-                    property bool enableTerminal: true
+                    property bool enableTerminal: false
                     property JsonObject terminalGenerationProps: JsonObject {
                         property real harmony: 0.6
                         property real harmonizeThreshold: 100
@@ -150,12 +150,12 @@ Singleton {
             }
 
             property JsonObject apps: JsonObject {
-                property string bluetooth: "kcmshell6 kcm_bluetooth"
+                property string bluetooth: "gnome-control-center bluetooth"
                 property string changePassword: "kitty -1 --hold=yes fish -i -c 'passwd'"
-                property string network: "kcmshell6 kcm_networkmanagement"
-                property string manageUser: "kcmshell6 kcm_users"
-                property string networkEthernet: "kcmshell6 kcm_networkmanagement"
-                property string taskManager: "plasma-systemmonitor --page-name Processes"
+                property string network: "nm-connection-editor"
+                property string manageUser: "gnome-control-center user-accounts"
+                property string networkEthernet: "nm-connection-editor"
+                property string taskManager: "gnome-system-monitor"
                 property string terminal: "kitty -1" // This is only for shell actions
                 property string update: "kitty -1 --hold=yes fish -i -c 'pkexec pacman -Syu'"
                 property string volumeMixer: `~/.config/hypr/hyprland/scripts/launch_first_available.sh "pavucontrol-qt" "pavucontrol"`
@@ -237,7 +237,7 @@ Singleton {
                 property int cornerStyle: 0 // 0: Hug | 1: Float | 2: Plain rectangle
                 property bool floatStyleShadow: true // Show shadow behind bar when cornerStyle == 1 (Float)
                 property bool borderless: false // true for no grouping of items
-                property string topLeftIcon: "spark" // Options: "distro" or any icon name in ~/.config/quickshell/ii/assets/icons
+                property string topLeftIcon: "distro" // Options: "distro" or any icon name in ~/.config/quickshell/ii/assets/icons
                 property bool showBackground: true
                 property bool verbose: true
                 property bool vertical: false
@@ -253,7 +253,7 @@ Singleton {
                     property bool showScreenSnip: true
                     property bool showColorPicker: false
                     property bool showMicToggle: false
-                    property bool showKeyboardToggle: true
+                    property bool showKeyboardToggle: false
                     property bool showDarkModeToggle: true
                     property bool showPerformanceProfileToggle: false
                     property bool showScreenRecord: false
@@ -330,7 +330,7 @@ Singleton {
                 property bool pinnedOnStartup: false
                 property bool hoverToReveal: true // When false, only reveals on empty workspace
                 property list<string> pinnedApps: [ // IDs of pinned entries
-                    "org.kde.dolphin", "kitty",]
+                    "org.gnome.Nautilus", "kitty",]
                 property list<string> ignoredAppRegexes: []
             }
 
@@ -356,7 +356,7 @@ Singleton {
             }
 
             property JsonObject launcher: JsonObject {
-                property list<string> pinnedApps: [ "org.kde.dolphin", "kitty", "cmake-gui"]
+                property list<string> pinnedApps: [ "org.gnome.Nautilus", "kitty", "cmake-gui"]
             }
 
             property JsonObject light: JsonObject {
@@ -501,6 +501,12 @@ Singleton {
                     property bool enable: false
                     property int delay: 300 // Delay before sending request. Reduces (potential) rate limits and lag.
                 }
+                property JsonObject todo: JsonObject {
+                    property bool enable: true
+                }
+                property JsonObject pomodoro: JsonObject {
+                    property bool enable: true
+                }
                 property JsonObject ai: JsonObject {
                     property bool textFadeIn: false
                 }
@@ -563,7 +569,7 @@ Singleton {
 
             property JsonObject time: JsonObject {
                 // https://doc.qt.io/qt-6/qtime.html#toString
-                property string format: "hh:mm"
+                property string format: "hh:mm AP"
                 property string shortDateFormat: "dd/MM"
                 property string dateWithYearFormat: "dd/MM/yyyy"
                 property string dateFormat: "ddd, dd/MM"
