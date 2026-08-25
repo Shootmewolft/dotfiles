@@ -1,0 +1,22 @@
+# lf config
+
+set icons true
+set drawbox true
+set ignorecase true
+set hidden false
+set preview true
+set number
+set relativenumber
+set scrolloff 5
+set shell zsh
+
+# Preview text with bat (fallback cat); images via kitty icat or chafa
+set previewer ~/.config/lf/preview.sh
+set cleaner ~/.config/lf/clean.sh
+
+map <c-r> reload
+map D delete
+map <enter> open
+
+# Toggle hidden files
+map . set hidden!

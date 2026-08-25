@@ -52,6 +52,7 @@ if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 fi
 
 # Aliases
+alias cat='bat --paging=never'
 alias ls='eza --icons --color=always --group-directories-first'
 alias ll='eza --icons --color=always --group-directories-first -lah --git --git-repos'
 alias la='eza --icons --color=always --group-directories-first -a'
@@ -68,6 +69,20 @@ alias pk='port-kill'
 alias cd='z'
 alias kiro='kiro-cli'
 
+# lf: cd into the last visited directory on quit
+lfcd() {
+  tmp="$(mktemp)"
+  command lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ] && [ "$dir" != "$(pwd)" ]; then
+      z "$dir"
+    fi
+  fi
+}
+alias lf='lfcd'
+
 # Powerlevel10k config
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
@@ -78,3 +93,6 @@ export PATH="$PATH:/home/shoot/.lmstudio/bin"
 
 # kimi-code
 export PATH="/home/shoot/.kimi-code/bin:$PATH"
+
+# bun completions
+[ -s "/home/shoot/.bun/_bun" ] && source "/home/shoot/.bun/_bun"

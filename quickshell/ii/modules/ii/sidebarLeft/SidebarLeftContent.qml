@@ -2,6 +2,7 @@ import qs.services
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.modules.ii.sidebarLeft.todo
+import qs.modules.ii.sidebarLeft.notes
 import qs.modules.ii.sidebarRight.pomodoro
 import QtQuick
 import QtQuick.Controls
@@ -18,6 +19,7 @@ Item {
     property bool translatorEnabled: Config.options.sidebar.translator.enable
     property bool todoEnabled: Config.options.sidebar.todo.enable
     property bool pomodoroEnabled: Config.options.sidebar.pomodoro.enable
+    property bool notesEnabled: Config.options.sidebar.notes.enable
     property bool animeEnabled: Config.options.policies.weeb !== 0
     property bool animeCloset: Config.options.policies.weeb === 2
     property var tabButtonList: [
@@ -25,6 +27,7 @@ Item {
         ...(root.translatorEnabled ? [{"icon": "translate", "name": Translation.tr("Translator")}] : []),
         ...(root.todoEnabled ? [{"icon": "checklist", "name": Translation.tr("To Do")}] : []),
         ...(root.pomodoroEnabled ? [{"icon": "search_activity", "name": Translation.tr("Pomodoro")}] : []),
+        ...(root.notesEnabled ? [{"icon": "edit_note", "name": Translation.tr("Notes")}] : []),
         ...((root.animeEnabled && !root.animeCloset) ? [{"icon": "bookmark_heart", "name": Translation.tr("Anime")}] : [])
     ]
     property int tabCount: swipeView.count
@@ -94,7 +97,8 @@ Item {
                     ...(root.translatorEnabled ? [translator.createObject()] : []),
                     ...(root.todoEnabled ? [todo.createObject()] : []),
                     ...(root.pomodoroEnabled ? [pomodoro.createObject()] : []),
-                    ...((root.tabButtonList.length === 0 || (!root.aiChatEnabled && !root.translatorEnabled && !root.todoEnabled && !root.pomodoroEnabled && root.animeCloset)) ? [placeholder.createObject()] : []),
+                    ...(root.notesEnabled ? [notes.createObject()] : []),
+                    ...((root.tabButtonList.length === 0 || (!root.aiChatEnabled && !root.translatorEnabled && !root.todoEnabled && !root.pomodoroEnabled && !root.notesEnabled && root.animeCloset)) ? [placeholder.createObject()] : []),
                     ...(root.animeEnabled ? [anime.createObject()] : []),
                 ]
             }
@@ -115,6 +119,10 @@ Item {
         Component {
             id: pomodoro
             PomodoroWidget {}
+        }
+        Component {
+            id: notes
+            NotesWidget {}
         }
         Component {
             id: anime

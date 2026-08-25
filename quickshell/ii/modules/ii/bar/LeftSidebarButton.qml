@@ -14,7 +14,8 @@ RippleButton {
     property bool animeEnabled: Config.options.policies.weeb !== 0
     property bool todoEnabled: Config.options.sidebar.todo.enable
     property bool pomodoroEnabled: Config.options.sidebar.pomodoro.enable
-    visible: aiChatEnabled || translatorEnabled || animeEnabled || todoEnabled || pomodoroEnabled
+    property bool notesEnabled: Config.options.sidebar.notes.enable
+    visible: aiChatEnabled || translatorEnabled || animeEnabled || todoEnabled || pomodoroEnabled || notesEnabled
 
     property real buttonPadding: 5
     implicitWidth: distroIcon.width + buttonPadding * 2

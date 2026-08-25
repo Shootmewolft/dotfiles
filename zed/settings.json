@@ -1,0 +1,191 @@
+{
+  "diff_view_style": "unified",
+  "git_panel": {
+    "group_by": "none",
+    "tree_view": true,
+  },
+  "languages": {
+    "CSS": {
+      "prettier": {
+        "parser": "",
+      },
+    },
+  },
+  "cli_default_open_behavior": "existing_window",
+  "icon_theme": "Symbols Icon Theme",
+  "agent": {
+    "favorite_models": [
+      {
+        "provider": "openai-subscribed",
+        "model": "gpt-5.6-terra",
+        "enable_thinking": true,
+        "effort": "medium",
+      },
+    ],
+    "default_model": {
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
+      "enable_thinking": true,
+      "effort": "medium",
+    },
+    "sandbox_permissions": {
+      "allow_unsandboxed": true,
+    },
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "always_allow": [
+            {
+              "pattern": "^bun\\s+run(\\s|$)",
+            },
+            {
+              "pattern": "^python3\\b",
+            },
+          ],
+        },
+      },
+    },
+    "commit_message_instructions": "Use the Conventional Commits format: <type>(<scope>): <description>. Valid types: feat, fix, refactor, docs, test, chore, style, perf. Keep the description short and in imperative mood. No AI attribution.",
+  },
+  "theme": "Kanagawa Wave Blur",
+  "theme_overrides": {
+    "Kanagawa Wave Blur": {
+      "error.background": "#2A1216F5",
+      "error.border": "#E82424",
+      "warning.background": "#2E2410F5",
+      "warning.border": "#FF9E3B",
+      "element.selected": "#2D4F67",
+      "ghost_element.selected": "#2D4F67",
+      "border.focused": "#7FB4CA",
+      "border.selected": "#7FB4CA",
+    },
+  },
+  "title_bar": {
+    "show_onboarding_banner": false,
+    "show_project_items": true,
+    "show_branch_name": true,
+    "show_user_menu": true,
+  },
+  "tab_bar": {
+    "show": false,
+  },
+  "toolbar": {
+    "quick_actions": false,
+  },
+  "status_bar": {
+    "experimental.show": true,
+  },
+  "soft_wrap": "editor_width",
+  "project_panel": {
+    "dock": "left",
+    "default_width": 180,
+    "hide_root": true,
+    "auto_fold_dirs": false,
+    "starts_open": false,
+    "git_status": false,
+    "sticky_scroll": false,
+    "scrollbar": {
+      "show": "never",
+    },
+    "indent_guides": {
+      "show": "never",
+    },
+  },
+  "outline_panel": {
+    "default_width": 300,
+    "indent_guides": {
+      "show": "never",
+    },
+  },
+  "file_finder": {
+    "modal_max_width": "large",
+  },
+  "scrollbar": {
+    "show": "never",
+  },
+  "gutter": {
+    "min_line_number_digits": 0,
+    "folds": true,
+    "runnables": false,
+  },
+  "indent_guides": {
+    "enabled": false,
+  },
+  "lsp": {
+    "vscode-css-language-server": {
+      "settings": {
+        "css": {
+          "lint": {
+            "unknownAtRules": "ignore",
+          },
+        },
+      },
+    },
+  },
+  "ui_font_family": "IosevkaTerm Nerd Font",
+  "ui_font_size": 17,
+  "buffer_font_family": "IosevkaTerm Nerd Font",
+  "buffer_font_size": 17,
+  "buffer_line_height": "standard",
+  "agent_buffer_font_size": 17,
+  "base_keymap": "VSCode",
+  "vim_mode": false,
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "cursor_shape": "bar",
+  "cursor_blink": false,
+  "selection_highlight": false,
+  "drag_and_drop_selection": {
+    "enabled": false,
+  },
+  "seed_search_query_from_cursor": "never",
+  "current_line_highlight": "none",
+  "show_whitespaces": "none",
+  "tab_size": 2,
+  "auto_indent": "syntax_aware",
+  "auto_indent_on_paste": false,
+  "show_completions_on_input": false,
+  "show_completion_documentation": false,
+  "inline_code_actions": false,
+  "lsp_document_colors": "none",
+  "hover_popover_enabled": true,
+  "format_on_save": "on",
+  "code_actions_on_format": {
+    "source.organizeImports": true,
+  },
+  "auto_signature_help": false,
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+    },
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000,
+    },
+  },
+  "auto_update": false,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "extend_comment_on_newline": false,
+  "horizontal_scroll_margin": 1,
+  "vertical_scroll_margin": 1,
+  "when_closing_with_no_tabs": "keep_window_open",
+  "close_on_file_delete": true,
+  "restore_on_file_reopen": false,
+  "restore_on_startup": "last_session",
+  "session": {
+    "restore_unsaved_buffers": false,
+  },
+  "git": {
+    "git_gutter": "hide",
+    "inline_blame": {
+      "enabled": true,
+    },
+  },
+  "centered_layout": {
+    "right_padding": 0.15,
+    "left_padding": 0.15,
+  },
+}

@@ -3,6 +3,9 @@
 hl.config({
     input = {
         kb_variant = "altgr-intl",
-        sensitivity = -0.6
+        sensitivity = 0
+    },
+    binds = {
+        workspace_back_and_forth = false
     }
 })

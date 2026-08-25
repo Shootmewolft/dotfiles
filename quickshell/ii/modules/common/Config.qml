@@ -123,7 +123,7 @@ Singleton {
                     property real contentTransparency: 0.57
                 }
                 property JsonObject wallpaperTheming: JsonObject {
-                    property bool enableAppsAndShell: true
+                    property bool enableAppsAndShell: false
                     property bool enableQtApps: false
                     property bool enableTerminal: false
                     property JsonObject terminalGenerationProps: JsonObject {
@@ -505,6 +505,9 @@ Singleton {
                     property bool enable: true
                 }
                 property JsonObject pomodoro: JsonObject {
+                    property bool enable: true
+                }
+                property JsonObject notes: JsonObject {
                     property bool enable: true
                 }
                 property JsonObject ai: JsonObject {

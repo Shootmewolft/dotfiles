@@ -1,0 +1,4 @@
+# Kanagawa-matching colors (same palette as kitty/foot/eza)
+di 01;38;2;127;180;202
+ln 38;2;156;171;202
+ex 01;38;2;152;187;108
