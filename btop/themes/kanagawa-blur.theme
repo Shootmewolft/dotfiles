@@ -1,0 +1,60 @@
+# Kanagawa Blur — btop
+# Neutral chrome, chromatic gauges. Boxes, dividers, selection and meter beds
+# are grey like the rest of the desktop; the gradients keep real hues because
+# there the colour is the data. Background is empty = the terminal's own.
+
+# Base
+theme[main_bg]=""
+theme[main_fg]="#DCD7BA"
+theme[title]="#DCD7BA"
+theme[hi_fg]="#AAAAAA"
+theme[selected_bg]="#303030"
+theme[selected_fg]="#DCD7BA"
+theme[inactive_fg]="#565656"
+theme[graph_text]="#B8B4A8"
+theme[meter_bg]="#2C2C2C"
+theme[proc_misc]="#7AA89F"
+
+# Boxes
+theme[cpu_box]="#565656"
+theme[mem_box]="#565656"
+theme[net_box]="#565656"
+theme[proc_box]="#565656"
+theme[div_line]="#383838"
+
+# Temperature: aqua -> yellow -> red
+theme[temp_start]="#7AA89F"
+theme[temp_mid]="#E6C384"
+theme[temp_end]="#C34043"
+
+# CPU: blue -> yellow -> red, escalating with load. No violet.
+theme[cpu_start]="#7FB4CA"
+theme[cpu_mid]="#E6C384"
+theme[cpu_end]="#FF5D62"
+
+# Memory: free / cached / available / used
+theme[free_start]="#2B3328"
+theme[free_mid]="#76946A"
+theme[free_end]="#98BB6C"
+theme[cached_start]="#252535"
+theme[cached_mid]="#658594"
+theme[cached_end]="#7FB4CA"
+theme[available_start]="#49443C"
+theme[available_mid]="#C0A36E"
+theme[available_end]="#E6C384"
+theme[used_start]="#43242B"
+theme[used_mid]="#C34043"
+theme[used_end]="#FF5D62"
+
+# Network
+theme[download_start]="#2B3328"
+theme[download_mid]="#76946A"
+theme[download_end]="#98BB6C"
+theme[upload_start]="#43242B"
+theme[upload_mid]="#C34043"
+theme[upload_end]="#FF5D62"
+
+# Process gradient
+theme[process_start]="#658594"
+theme[process_mid]="#7FB4CA"
+theme[process_end]="#A3D4D5"
