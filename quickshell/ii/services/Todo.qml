@@ -48,6 +48,15 @@ Singleton {
         }
     }
 
+    function editTask(index, desc) {
+        if (index >= 0 && index < list.length && desc.length > 0) {
+            list[index].content = desc
+            // Reassign to trigger onListChanged
+            root.list = list.slice(0)
+            todoFileView.setText(JSON.stringify(root.list))
+        }
+    }
+
     function deleteItem(index) {
         if (index >= 0 && index < list.length) {
             list.splice(index, 1)

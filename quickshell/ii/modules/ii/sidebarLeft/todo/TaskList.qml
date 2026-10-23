@@ -30,6 +30,25 @@ Item {
             property bool pendingDoneToggle: false
             property bool pendingDelete: false
             property bool enableHeightAnimation: false
+            property bool editing: false
+
+            function startEditing() {
+                todoEditInput.text = todoItem.modelData.content;
+                todoItem.editing = true;
+                todoEditInput.forceActiveFocus();
+                todoEditInput.selectAll();
+            }
+
+            function saveEdit() {
+                const newContent = todoEditInput.text.trim();
+                todoItem.editing = false;
+                if (newContent.length > 0 && newContent !== todoItem.modelData.content)
+                    Todo.editTask(todoItem.modelData.originalIndex, newContent);
+            }
+
+            function cancelEdit() {
+                todoItem.editing = false;
+            }
 
             implicitHeight: todoItemRectangle.implicitHeight
             width: ListView.view.width
@@ -64,8 +83,46 @@ Item {
                         Layout.leftMargin: 10
                         Layout.rightMargin: 10
                         Layout.topMargin: todoListItemPadding
+                        visible: !todoItem.editing
                         text: todoItem.modelData.content
                         wrapMode: Text.Wrap
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onDoubleClicked: todoItem.startEditing()
+                        }
+                    }
+                    TextField {
+                        id: todoEditInput
+                        Layout.fillWidth: true
+                        Layout.leftMargin: 10
+                        Layout.rightMargin: 10
+                        Layout.topMargin: todoListItemPadding
+                        visible: todoItem.editing
+                        padding: 6
+                        color: Appearance.m3colors.m3onSurface
+                        renderType: Text.NativeRendering
+                        selectedTextColor: Appearance.m3colors.m3onSecondaryContainer
+                        selectionColor: Appearance.colors.colSecondaryContainer
+                        onAccepted: todoItem.saveEdit()
+                        Keys.onEscapePressed: (event) => {
+                            todoItem.cancelEdit();
+                            event.accepted = true;
+                        }
+
+                        background: Rectangle {
+                            anchors.fill: parent
+                            radius: Appearance.rounding.verysmall
+                            border.width: 2
+                            border.color: todoEditInput.activeFocus ? Appearance.colors.colPrimary : Appearance.m3colors.m3outline
+                            color: "transparent"
+                        }
+
+                        cursorDelegate: Rectangle {
+                            width: 1
+                            color: todoEditInput.activeFocus ? Appearance.colors.colPrimary : "transparent"
+                            radius: 1
+                        }
                     }
                     RowLayout {
                         Layout.leftMargin: 10
@@ -73,6 +130,23 @@ Item {
                         Layout.bottomMargin: todoListItemPadding
                         Item {
                             Layout.fillWidth: true
+                        }
+                        TodoItemActionButton {
+                            Layout.fillWidth: false
+                            tooltipText: todoItem.editing ? Translation.tr("Save") : Translation.tr("Edit")
+                            onClicked: {
+                                if (todoItem.editing)
+                                    todoItem.saveEdit();
+                                else
+                                    todoItem.startEditing();
+                            }
+                            contentItem: MaterialSymbol {
+                                anchors.centerIn: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                text: todoItem.editing ? "save" : "edit"
+                                iconSize: Appearance.font.pixelSize.larger
+                                color: Appearance.colors.colOnLayer1
+                            }
                         }
                         TodoItemActionButton {
                             Layout.fillWidth: false
