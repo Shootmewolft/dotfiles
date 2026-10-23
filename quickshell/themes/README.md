@@ -154,3 +154,15 @@ Zed carries opacity inside the colour, as the last two hex digits: `0.85` is
 `D9`. Its `background` is `#0E0E0ED9`. The seven keys the theme leaves at
 `#00000000` must stay untouched - that transparency is what the compositor
 blurs.
+
+## Upstream files patched locally
+
+`ii/scripts/colors/switchwall.sh` is an illogical-impulse file, not ours. Its
+wallpaper prompt hardcoded `kdialog`, which opens KDE's file dialog on this GTK
+desktop. It now prefers `zenity` and falls back to `kdialog` when zenity is
+missing. An upstream dots update will overwrite this - re-apply the patch if the
+KDE dialog comes back.
+
+Related: `hypr/custom/env.lua` sets `QT_QPA_PLATFORMTHEME=gtk3`, overriding the
+base config's `kde`. That is what stops Qt apps - `hyprland-share-picker`, the
+screen-share window - from rendering in Breeze.
