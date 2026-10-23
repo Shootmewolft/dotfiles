@@ -13,3 +13,14 @@ hl.bind("SUPER + ALT + Down", hl.dsp.window.resize({ x = 0, y = 20, relative = t
 -- Toggle split orientation between vertical/horizontal (dwindle layout)
 hl.bind("SUPER + ALT + T", hl.dsp.layout("togglesplit"),
     { description = "Window: Toggle split orientation" })
+
+-- Handy - Toggle local transcription
+hl.bind(
+    "SUPER + Z",
+    hl.dsp.exec_cmd("pkill -USR2 -x handy"),
+    { description = "Handy: Toggle transcription" }
+)
+
+-- Obsidian on SUPER+N (replaces the right sidebar toggle from hyprland/keybinds.lua)
+hl.unbind("SUPER + N")
+hl.bind("SUPER + N", hl.dsp.exec_cmd("obsidian"), { description = "App: Obsidian" })
