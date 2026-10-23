@@ -32,6 +32,16 @@ ButtonMouseArea {
     property real workspaceIconMarginShrinked: -4
     property int workspaceIndexInGroup: (monitor?.activeWorkspace?.id - 1) % wsModel.shownCount
     property real specialTextSize: workspaceButtonWidth * 0.5
+    property real workspaceSymbolSize: workspaceButtonWidth * 0.6
+
+    // Per-workspace icon and color (bar.workspaces.iconMap/colorMap)
+    function workspaceIcon(id) {
+        return Config.options?.bar.workspaces.iconMap?.[id - 1] ?? "";
+    }
+    function workspaceAccent(id, fallback) {
+        const color = Config.options?.bar.workspaces.colorMap?.[id - 1];
+        return color ? color : fallback;
+    }
 
     Layout.alignment: vertical ? Qt.AlignHCenter : Qt.AlignVCenter
     Layout.fillWidth: vertical
@@ -369,7 +379,10 @@ ButtonMouseArea {
         id: wsNum
         property bool hasBiggestWindow: !!wsModel.biggestWindow[index]
         property int wsId: wsModel.getWorkspaceIdAt(index)
-        property color contentColor: (wsModel.occupied[wsNum.index] && wsId !== wsModel.fakeWorkspace) ? Appearance.colors.colOnSecondaryContainer : Appearance.colors.colOnLayer1Inactive
+        property bool isOccupied: wsModel.occupied[wsNum.index] && wsId !== wsModel.fakeWorkspace
+        property bool isActive: wsId === root.monitor?.activeWorkspace?.id
+        property string symbol: root.workspaceIcon(wsId)
+        property color contentColor: wsNum.isOccupied ? root.workspaceAccent(wsId, Appearance.colors.colOnSecondaryContainer) : Appearance.colors.colOnLayer1Inactive
         property bool showingNumbers: {
             if (root.superPressAndHeld)
                 return true;
@@ -381,12 +394,27 @@ ButtonMouseArea {
         }
 
         FadeLoader {
-            shown: !wsNum.showingNumbers
+            shown: !wsNum.showingNumbers && wsNum.symbol === ""
             anchors.centerIn: parent
             Circle {
                 anchors.centerIn: parent
                 diameter: root.workspaceButtonWidth * 0.18
                 color: wsNum.contentColor
+            }
+        }
+        FadeLoader {
+            shown: !wsNum.showingNumbers && wsNum.symbol !== ""
+            anchors.centerIn: parent
+            MaterialSymbol {
+                anchors.centerIn: parent
+                text: wsNum.symbol
+                iconSize: root.workspaceSymbolSize
+                fill: wsNum.isActive ? 1 : 0
+                color: wsNum.contentColor
+                opacity: (wsNum.isOccupied || wsNum.isActive) ? 1 : 0.55
+                Behavior on opacity {
+                    animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
+                }
             }
         }
         FadeLoader {
@@ -431,6 +459,9 @@ ButtonMouseArea {
             contentLayer: StyledRectangle.ContentLayer.Group
             radius: indicatorThickness / 2
             color: Appearance.colors.colPrimary
+            Behavior on color {
+                ColorAnimation { duration: 200 }
+            }
 
             x: root.vertical ? null : indicatorPosition
             y: root.vertical ? indicatorPosition : null

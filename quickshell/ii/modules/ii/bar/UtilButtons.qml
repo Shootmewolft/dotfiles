@@ -1,4 +1,5 @@
 import qs
+import qs.services
 import qs.modules.common
 import qs.modules.common.widgets
 import QtQuick
@@ -126,6 +127,8 @@ Item {
             active: Config.options.bar.utilButtons.showPerformanceProfileToggle
             visible: Config.options.bar.utilButtons.showPerformanceProfileToggle
             sourceComponent: CircleUtilButton {
+                id: powerProfileButton
+                readonly property bool containsMouse: hovered // StyledPopup's hoverTarget contract
                 Layout.alignment: Qt.AlignVCenter
                 onClicked: event => {
                     if (PowerProfiles.hasPerformanceProfile) {
@@ -151,6 +154,34 @@ Item {
                     }
                     iconSize: Appearance.font.pixelSize.large
                     color: Appearance.colors.colOnLayer2
+
+                    StyledPopup {
+                        hoverTarget: powerProfileButton
+
+                        ColumnLayout {
+                            anchors.centerIn: parent
+                            spacing: 4
+
+                            StyledPopupHeaderRow {
+                                icon: "bolt"
+                                label: Translation.tr("Power profile")
+                            }
+
+                            StyledPopupValueRow {
+                                icon: switch(PowerProfiles.profile) {
+                                    case PowerProfile.PowerSaver: return "energy_savings_leaf"
+                                    case PowerProfile.Balanced: return "airwave"
+                                    case PowerProfile.Performance: return "local_fire_department"
+                                }
+                                label: Translation.tr("Mode:")
+                                value: switch(PowerProfiles.profile) {
+                                    case PowerProfile.PowerSaver: return Translation.tr("Power saver")
+                                    case PowerProfile.Balanced: return Translation.tr("Balanced")
+                                    case PowerProfile.Performance: return Translation.tr("Performance")
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

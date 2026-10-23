@@ -266,6 +266,8 @@ Singleton {
                     property int showNumberDelay: 300 // milliseconds
                     property list<string> numberMap: ["1", "2"] // Characters to show instead of numbers on workspace indicator
                     property bool useNerdFont: false
+                    property list<string> iconMap: [] // Material Symbols per workspace; empty keeps the default dots
+                    property list<string> colorMap: [] // Accent color per workspace (hex); empty uses the theme colors
                 }
                 property JsonObject weather: JsonObject {
                     property bool enable: false
@@ -399,7 +401,7 @@ Singleton {
 
             property JsonObject notifications: JsonObject {
                 property int timeout: 7000
-                property JsonObject monitor: JsonObject {
+                property JsonObject forceMonitor: JsonObject {
                     property bool enable: false
                     property string name: "" // Name of the monitor to show notifications on, like "eDP-1". Find out with 'hyprctl monitors' command
                 }
