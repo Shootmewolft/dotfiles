@@ -1,0 +1,13 @@
+{
+  "cssTheme": "",
+  "theme": "obsidian",
+  "accentColor": "#7FB4CA",
+  "baseFontSize": 16,
+  "enabledCssSnippets": [
+    "kanagawa-gentleman"
+  ],
+  "interfaceFontFamily": "Google Sans Flex",
+  "textFontFamily": "Google Sans Flex",
+  "monospaceFontFamily": "IosevkaTerm NF",
+  "translucency": false
+}

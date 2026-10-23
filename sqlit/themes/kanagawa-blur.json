@@ -1,0 +1,23 @@
+{
+  "_note": "Kanagawa Blur. Neutral chrome, hue only where it carries meaning.",
+  "theme": {
+    "name": "kanagawa-blur",
+    "dark": true,
+    "background": "#0E0E0E",
+    "surface": "#1C1C1C",
+    "panel": "#242424",
+    "foreground": "#DCD7BA",
+    "primary": "#C6C6C6",
+    "secondary": "#B0B0B0",
+    "accent": "#AAAAAA",
+    "warning": "#E6C384",
+    "error": "#C34043",
+    "success": "#98BB6C",
+    "variables": {
+      "border": "#383838",
+      "input-selection-background": "#C6C6C6 25%",
+      "mode-normal-color": "#C6C6C6",
+      "mode-insert-color": "#98BB6C"
+    }
+  }
+}

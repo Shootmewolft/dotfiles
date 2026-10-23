@@ -1,0 +1,844 @@
+/* ==========================================================================
+   Kanagawa Gentleman — Obsidian UI/UX redesign
+   Palette: Kanagawa Wave (matches Zed "Kanagawa Wave Blur" + kitty)
+   Base surface: #0E0E0E, aligned with ghostty/kitty background.
+
+   Layers:
+     1. Palette tokens        — raw Kanagawa ramp, never used directly in rules
+     2. Semantic tokens       — Obsidian variable mapping
+     3. Typography & rhythm
+     4. Application chrome
+     5. Editor content
+     6. Graph view
+     7. Interaction polish
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   1. Palette tokens
+   ------------------------------------------------------------------------- */
+
+.theme-dark {
+  /* Surfaces — neutral greys, R=G=B, zero hue.
+     Kanagawa's own sumiInk ramp sits at hue 240deg / ~13% saturation, which
+     reads as violet across a surface as large as the note background. Only the
+     substrate is neutralised here; the accent ramp below stays pure Kanagawa.
+     Note the ordering is by ROLE, not by lightness: the note is the focal
+     surface and therefore sits above the chrome. */
+  --kg-surface-chrome: #070707; /* sidebars, ribbon, status bar, titlebar */
+  --kg-surface-sunken: #0A0A0A; /* recessed chrome */
+  --kg-surface-note:   #0E0E0E; /* note background — exact terminal background */
+  --kg-surface-raised: #141414; /* code blocks, modals, embeds, form fields */
+  --kg-surface-hover:  #1C1C1C; /* hover fills, table headers, tooltips */
+  --kg-border:         #262626;
+  --kg-border-strong:  #383838;
+  --kg-text-faint:     #4C4C4C; /* faint text needs more lift than a border */
+
+  /* Muted accent washes — for selection, highlights, callout fills */
+  --kg-wave-blue-1: #223249;
+  --kg-wave-blue-2: #2D4F67;
+  --kg-winter-green:#2B3328;
+  --kg-winter-yellow:#49443C;
+  --kg-winter-red:  #43242B;
+  --kg-winter-blue: #252535;
+
+  /* Text ramp */
+  --kg-fuji-white:  #DCD7BA; /* primary text */
+  --kg-old-white:   #C8C093;
+  --kg-fuji-gray:   #727169; /* muted */
+  --kg-katana-gray: #717C7C;
+
+  /* Accents */
+  --kg-spring-blue:  #7FB4CA;
+  --kg-crystal-blue: #7E9CD8;
+  --kg-light-blue:   #A3D4D5;
+  --kg-dragon-blue:  #658594;
+  --kg-spring-violet:#9CABCA;
+  --kg-oni-violet:   #957FB8;
+  --kg-sakura-pink:  #D27E99;
+  --kg-wave-red:     #E46876;
+  --kg-peach-red:    #FF5D62;
+  --kg-autumn-red:   #C34043;
+  --kg-surimi-orange:#FFA066;
+  --kg-ronin-yellow: #FF9E3B;
+  --kg-carp-yellow:  #E6C384;
+  --kg-boat-yellow:  #C0A36E;
+  --kg-spring-green: #98BB6C;
+  --kg-autumn-green: #76946A;
+  --kg-wave-aqua-1:  #6A9589;
+  --kg-wave-aqua-2:  #7AA89F;
+
+  /* Primary accent — shared by ghostty, kitty and Zed */
+  --kg-accent:       var(--kg-spring-blue);
+  --kg-accent-soft:  var(--kg-light-blue);
+}
+
+/* Light mode: Kanagawa Lotus, so toggling does not fall back to stock Obsidian */
+.theme-light {
+  --kg-surface-chrome: #E5DDB0;
+  --kg-surface-sunken: #E0D7A6;
+  --kg-surface-note:   #F2ECBC; /* Lotus paper — focal surface */
+  --kg-surface-raised: #E9E1B4;
+  --kg-surface-hover:  #DCD5AC;
+  --kg-border:         #CFC7A3;
+  --kg-border-strong:  #B9B28A;
+  --kg-text-faint:     #9A9788;
+
+  --kg-wave-blue-1: #C9CBD1;
+  --kg-wave-blue-2: #B5CBD2;
+  --kg-winter-green:#C7D7B9;
+  --kg-winter-yellow:#E2D2A4;
+  --kg-winter-red:  #D7C9C1;
+  --kg-winter-blue: #CDD3DA;
+
+  --kg-fuji-white:  #545464;
+  --kg-old-white:   #43436C;
+  --kg-fuji-gray:   #8A8980;
+  --kg-katana-gray: #716E61;
+
+  --kg-spring-blue:  #4D699B;
+  --kg-crystal-blue: #4D699B;
+  --kg-light-blue:   #5E857A;
+  --kg-dragon-blue:  #567380;
+  --kg-spring-violet:#766B90;
+  --kg-oni-violet:   #624C83;
+  --kg-sakura-pink:  #B35B79;
+  --kg-wave-red:     #C84053;
+  --kg-peach-red:    #D7474B;
+  --kg-autumn-red:   #C84053;
+  --kg-surimi-orange:#CC6D00;
+  --kg-ronin-yellow: #CC6D00;
+  --kg-carp-yellow:  #836F4A;
+  --kg-boat-yellow:  #836F4A;
+  --kg-spring-green: #6F894E;
+  --kg-autumn-green: #6F894E;
+  --kg-wave-aqua-1:  #597B75;
+  --kg-wave-aqua-2:  #5E857A;
+
+  --kg-accent:       var(--kg-spring-blue);
+  --kg-accent-soft:  var(--kg-light-blue);
+}
+
+/* ---------------------------------------------------------------------------
+   2. Semantic tokens — Obsidian variable mapping
+   ------------------------------------------------------------------------- */
+
+.theme-dark,
+.theme-light {
+  /* Backgrounds: sidebars sit one step below the note, so the note reads as
+     the elevated focal surface rather than a hole in the UI. */
+  --background-primary:        var(--kg-surface-note);
+  --background-primary-alt:    var(--kg-surface-raised);
+  --background-secondary:      var(--kg-surface-chrome);
+  --background-secondary-alt:  var(--kg-surface-sunken);
+
+  --background-modifier-border:          var(--kg-border);
+  --background-modifier-border-hover:    var(--kg-border-strong);
+  --background-modifier-border-focus:    var(--kg-accent);
+  --background-modifier-hover:           var(--kg-surface-hover);
+  --background-modifier-active-hover:    var(--kg-wave-blue-1);
+  --background-modifier-form-field:      var(--kg-surface-raised);
+  --background-modifier-error:           var(--kg-winter-red);
+  --background-modifier-error-hover:     var(--kg-autumn-red);
+  --background-modifier-success:         var(--kg-winter-green);
+  --background-modifier-message:         var(--kg-surface-hover);
+
+  --divider-color:       var(--kg-border);
+  --divider-color-hover: var(--kg-accent);
+
+  /* Text */
+  --text-normal:        var(--kg-fuji-white);
+  --text-muted:         var(--kg-fuji-gray);
+  --text-faint:         var(--kg-text-faint);
+  --text-on-accent:     var(--kg-surface-raised);
+  --text-accent:        var(--kg-accent);
+  --text-accent-hover:  var(--kg-accent-soft);
+  --text-error:         var(--kg-peach-red);
+  --text-success:       var(--kg-spring-green);
+  --text-warning:       var(--kg-ronin-yellow);
+  --text-selection:     var(--kg-wave-blue-1);
+  --text-highlight-bg:  var(--kg-winter-yellow);
+
+  /* Interactive */
+  --interactive-normal:        var(--kg-surface-hover);
+  --interactive-hover:         var(--kg-border);
+  --interactive-accent:        var(--kg-accent);
+  --interactive-accent-hover:  var(--kg-accent-soft);
+  --interactive-success:       var(--kg-spring-green);
+
+  /* Radii — slightly softer than stock, consistent across the app */
+  --radius-s:  4px;
+  --radius-m:  7px;
+  --radius-l:  11px;
+  --radius-xl: 16px;
+
+  /* Elevation */
+  --shadow-s: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-l: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------------------------------------------------------------------------
+   3. Typography & rhythm
+   ------------------------------------------------------------------------- */
+
+body {
+  --font-text-size: 16px;
+  --line-height-normal: 1.65;
+  --line-height-tight:  1.35;
+
+  /* A measure around 68ch keeps lines in the comfortable 60–80 character band. */
+  --file-line-width: 46rem;
+  --file-margins: 42px 46px 34vh 46px;
+
+  /* Modular heading scale, ratio ~1.2, anchored to the body size. */
+  --h1-size: 2.1em;
+  --h2-size: 1.65em;
+  --h3-size: 1.35em;
+  --h4-size: 1.15em;
+  --h5-size: 1em;
+  --h6-size: 0.9em;
+
+  --h1-weight: 700;
+  --h2-weight: 650;
+  --h3-weight: 600;
+  --h4-weight: 600;
+  --h5-weight: 600;
+  --h6-weight: 600;
+
+  --h1-line-height: 1.2;
+  --h2-line-height: 1.25;
+  --h3-line-height: 1.3;
+
+  /* Heading hue rotation: each level owns a distinct accent so document
+     structure is readable at a glance while scrolling. */
+  --h1-color: var(--kg-carp-yellow);
+  --h2-color: var(--kg-spring-blue);
+  --h3-color: var(--kg-wave-aqua-2);
+  --h4-color: var(--kg-spring-green);
+  --h5-color: var(--kg-oni-violet);
+  --h6-color: var(--kg-fuji-gray);
+
+  --font-ui-smaller: 12px;
+  --font-ui-small:   13px;
+  --font-ui-medium:  15px;
+  --font-ui-large:   18px;
+}
+
+/* H1 and H2 carry a rule so long notes get visual chapters. */
+.markdown-preview-view h1,
+.markdown-source-view.mod-cm6 .HyperMD-header-1 {
+  padding-bottom: 0.28em;
+  border-bottom: 2px solid var(--kg-border);
+  letter-spacing: -0.015em;
+}
+
+.markdown-preview-view h2,
+.markdown-source-view.mod-cm6 .HyperMD-header-2 {
+  padding-bottom: 0.22em;
+  border-bottom: 1px solid var(--kg-surface-hover);
+  letter-spacing: -0.01em;
+}
+
+/* Breathing room above headings, tighter below — binds each heading to its
+   own body copy instead of floating between blocks. */
+.markdown-preview-view h1 { margin-top: 1.9em; margin-bottom: 0.6em; }
+.markdown-preview-view h2 { margin-top: 1.7em; margin-bottom: 0.55em; }
+.markdown-preview-view h3 { margin-top: 1.5em; margin-bottom: 0.45em; }
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6 { margin-top: 1.3em; margin-bottom: 0.4em; }
+
+/* ---------------------------------------------------------------------------
+   4. Application chrome
+   ------------------------------------------------------------------------- */
+
+.app-container,
+.workspace {
+  background-color: var(--kg-surface-chrome);
+}
+
+/* Titlebar and ribbon melt into the void surface. */
+body {
+  --titlebar-background:         var(--kg-surface-chrome);
+  --titlebar-background-focused: var(--kg-surface-chrome);
+  --titlebar-text-color:         var(--kg-fuji-gray);
+  --titlebar-text-color-focused: var(--kg-fuji-white);
+
+  --ribbon-background:           var(--kg-surface-chrome);
+  --ribbon-background-collapsed: var(--kg-surface-chrome);
+
+  --status-bar-background:       var(--kg-surface-chrome);
+  --status-bar-text-color:       var(--kg-fuji-gray);
+  --status-bar-border-color:     transparent;
+}
+
+/* Tabs — active tab gets an accent underline instead of a heavy fill. */
+body {
+  --tab-background-active:   var(--kg-surface-note);
+  --tab-text-color:          var(--kg-fuji-gray);
+  --tab-text-color-active:   var(--kg-fuji-white);
+  --tab-text-color-focused:  var(--kg-fuji-white);
+  --tab-text-color-focused-active: var(--kg-fuji-white);
+  --tab-outline-color:       var(--kg-surface-hover);
+  --tab-outline-width:       1px;
+  --tab-radius-active:       var(--radius-m) var(--radius-m) 0 0;
+  --tab-curve:               0px;
+}
+
+.workspace-tab-header.is-active::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background-color: var(--kg-accent);
+}
+
+/* The note pane is the focal surface: rounded, separated from the void. */
+.workspace-split.mod-root .workspace-leaf-content {
+  border-radius: var(--radius-l);
+}
+
+/* Sidebars — recessed, low-contrast, deliberately quiet. */
+body {
+  --nav-item-color:          var(--kg-fuji-gray);
+  --nav-item-color-hover:    var(--kg-fuji-white);
+  --nav-item-color-active:   var(--kg-accent);
+  --nav-item-background-hover:  var(--kg-surface-note);
+  --nav-item-background-active: var(--kg-wave-blue-1);
+  --nav-item-weight-active:  600;
+  --nav-item-padding:        5px 12px;
+  --nav-indentation-guide-color: var(--kg-surface-hover);
+  --nav-indentation-guide-width: 1px;
+}
+
+.nav-file-title,
+.nav-folder-title {
+  border-radius: var(--radius-s);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.nav-folder-title {
+  color: var(--kg-old-white);
+  font-weight: 550;
+}
+
+/* Active file gets an accent rail, clearer than a background tint alone. */
+.nav-file-title.is-active {
+  box-shadow: inset 2px 0 0 var(--kg-accent);
+}
+
+/* ---------------------------------------------------------------------------
+   5. Editor content
+   ------------------------------------------------------------------------- */
+
+/* Inline code — tinted, not a grey slab. */
+body {
+  --code-background:  var(--kg-surface-raised);
+  --code-normal:      var(--kg-fuji-white);
+  --code-comment:     var(--kg-fuji-gray);
+  --code-function:    var(--kg-crystal-blue);
+  --code-important:   var(--kg-surimi-orange);
+  --code-keyword:     var(--kg-oni-violet);
+  --code-operator:    var(--kg-wave-red);
+  --code-property:    var(--kg-carp-yellow);
+  --code-punctuation: var(--kg-spring-violet);
+  --code-string:      var(--kg-spring-green);
+  --code-tag:         var(--kg-sakura-pink);
+  --code-value:       var(--kg-boat-yellow);
+  --code-size:        0.9em;
+}
+
+.markdown-rendered code:not(pre > code) {
+  color: var(--kg-carp-yellow);
+  background-color: var(--kg-surface-raised);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--kg-surface-hover);
+}
+
+pre.language-,
+.markdown-rendered pre {
+  background-color: var(--kg-surface-raised);
+  border: 1px solid var(--kg-surface-hover);
+  border-radius: var(--radius-m);
+  padding: 14px 16px;
+}
+
+/* Links — accent, underline only on hover to keep body copy calm. */
+body {
+  --link-color:              var(--kg-spring-blue);
+  --link-color-hover:        var(--kg-light-blue);
+  --link-decoration:         none;
+  --link-decoration-hover:   underline;
+  --link-external-color:     var(--kg-wave-aqua-2);
+  --link-external-color-hover: var(--kg-light-blue);
+  --link-unresolved-color:   var(--kg-sakura-pink);
+  --link-unresolved-opacity: 0.7;
+  --link-unresolved-decoration-style: dashed;
+}
+
+/* Tags — pill shaped, accent-tinted, readable at small size. */
+body {
+  --tag-color:            var(--kg-wave-aqua-2);
+  --tag-background:       var(--kg-surface-raised);
+  --tag-background-hover: var(--kg-wave-blue-1);
+  --tag-border-color:     var(--kg-border);
+  --tag-border-width:     1px;
+  --tag-radius:           999px;
+  --tag-padding-x:        8px;
+  --tag-padding-y:        2px;
+  --tag-size:             0.82em;
+  --tag-weight:           550;
+}
+
+/* Blockquotes — accent rail plus a faint fill so they read as an aside. */
+body {
+  --blockquote-border-color: var(--kg-oni-violet);
+  --blockquote-border-thickness: 3px;
+  --blockquote-color: var(--kg-old-white);
+  --blockquote-background-color: var(--kg-surface-raised);
+}
+
+.markdown-rendered blockquote {
+  padding: 0.6em 1em;
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+}
+
+/* Tables — zebra striping on the ink ramp, no heavy grid lines. */
+body {
+  --table-header-background: var(--kg-surface-hover);
+  --table-header-background-hover: var(--kg-border);
+  --table-header-color: var(--kg-carp-yellow);
+  --table-header-weight: 600;
+  --table-row-alt-background: var(--kg-surface-raised);
+  --table-row-background-hover: var(--kg-wave-blue-1);
+  --table-border-color: var(--kg-surface-hover);
+  --table-border-width: 1px;
+}
+
+/* Callouts — every type mapped onto the palette. */
+body {
+  --callout-radius:  var(--radius-m);
+  --callout-border-width: 0px;
+  --callout-border-opacity: 0.25;
+  --callout-padding: 12px 16px;
+  --callout-blend-mode: normal;
+
+  /* Built-in types read RGB triplets (rgb(var(--callout-color))), so they use
+     the --kg-rgb-* tokens from section 8, never the hex palette variables. */
+  --callout-info:     var(--kg-rgb-blue);
+  --callout-todo:     var(--kg-rgb-crystal);
+  --callout-tip:      var(--kg-rgb-aqua);
+  --callout-success:  var(--kg-rgb-green);
+  --callout-question: var(--kg-rgb-yellow);
+  --callout-warning:  var(--kg-rgb-orange);
+  --callout-fail:     var(--kg-rgb-peach);
+  --callout-error:    var(--kg-rgb-deepred);
+  --callout-bug:      var(--kg-rgb-red);
+  --callout-example:  var(--kg-rgb-violet);
+  --callout-quote:    var(--kg-rgb-gray);
+  --callout-summary:  var(--kg-rgb-cyan);
+  --callout-abstract: var(--kg-rgb-cyan);
+  --callout-note:     var(--kg-rgb-blue);
+  --callout-important:var(--kg-rgb-orange);
+  --callout-danger:   var(--kg-rgb-peach);
+}
+
+.callout {
+  box-shadow: inset 3px 0 0 rgb(var(--callout-color));
+}
+
+/* Checkboxes and lists */
+body {
+  --checkbox-color:        var(--kg-accent);
+  --checkbox-color-hover:  var(--kg-accent-soft);
+  --checkbox-border-color: var(--kg-border-strong);
+  --checkbox-border-color-hover: var(--kg-accent);
+  --checkbox-marker-color: var(--kg-surface-raised);
+  --checkbox-radius:       var(--radius-s);
+  --list-marker-color:     var(--kg-fuji-gray);
+  --list-indent:           1.9em;
+  --list-spacing:          0.12em;
+}
+
+/* Completed tasks fade out — done work should recede, not compete. */
+.markdown-rendered li[data-task="x"] > *,
+.markdown-rendered li[data-task="X"] > * {
+  color: var(--kg-fuji-gray);
+  text-decoration: line-through;
+  text-decoration-color: var(--kg-border-strong);
+}
+
+/* Horizontal rules */
+body { --hr-color: var(--kg-border); --hr-thickness: 1px; }
+
+/* Bold and italic get hue so emphasis survives the low-contrast palette. */
+.markdown-rendered strong { color: var(--kg-carp-yellow); font-weight: 650; }
+.markdown-rendered em     { color: var(--kg-light-blue); }
+.markdown-rendered mark {
+  background-color: var(--kg-winter-yellow);
+  color: var(--kg-fuji-white);
+  border-radius: var(--radius-s);
+  padding: 0.05em 0.25em;
+}
+
+/* Embeds and properties */
+body {
+  --embed-background: var(--kg-surface-raised);
+  --embed-border-left: 2px solid var(--kg-oni-violet);
+  --metadata-label-text-color: var(--kg-fuji-gray);
+  --metadata-input-text-color: var(--kg-fuji-white);
+  --metadata-background: transparent;
+  --metadata-divider-color: var(--kg-surface-hover);
+}
+
+/* Active line — subtle, enough to track the cursor without glare. */
+.markdown-source-view.mod-cm6 .cm-active.cm-line {
+  background-color: rgba(255, 255, 255, 0.035);
+  border-radius: var(--radius-s);
+}
+
+.cm-s-obsidian .cm-cursor,
+.markdown-source-view.mod-cm6 .cm-cursor-primary {
+  border-left-color: var(--kg-carp-yellow);
+  border-left-width: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   6. Graph view
+   ------------------------------------------------------------------------- */
+
+.theme-dark {
+  --graph-line:            var(--kg-border-strong);
+  --graph-node:            var(--kg-fuji-white);
+  --graph-node-tag:        var(--kg-wave-aqua-2);
+  --graph-node-attachment: var(--kg-oni-violet);
+  --graph-node-unresolved: var(--kg-fuji-gray);
+  --graph-node-focused:    var(--kg-carp-yellow);
+}
+
+/* ---------------------------------------------------------------------------
+   7. Interaction polish
+   ------------------------------------------------------------------------- */
+
+/* Scrollbars — invisible until you scroll, then Kanagawa grey. */
+body {
+  --scrollbar-bg:              transparent;
+  --scrollbar-thumb-bg:        var(--kg-border);
+  --scrollbar-active-thumb-bg: var(--kg-border-strong);
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 999px;
+}
+
+/* Modals, prompts and the command palette share one elevated surface. */
+body {
+  --modal-background:   var(--kg-surface-raised);
+  --modal-border-color: var(--kg-border);
+  --modal-radius:       var(--radius-l);
+  --prompt-border-color: var(--kg-border);
+  --prompt-width:       660px;
+  --suggestion-highlight-color: var(--kg-accent);
+}
+
+.suggestion-item.is-selected {
+  background-color: var(--kg-wave-blue-1);
+  box-shadow: inset 2px 0 0 var(--kg-accent);
+}
+
+/* Search results */
+body {
+  --search-result-background: var(--kg-surface-raised);
+  --text-highlight-bg-active: var(--kg-wave-blue-2);
+}
+
+/* Inputs and buttons */
+input[type="text"],
+input[type="search"],
+textarea,
+.dropdown {
+  border-radius: var(--radius-m);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+input:focus,
+textarea:focus,
+.dropdown:focus {
+  box-shadow: 0 0 0 2px rgba(127, 180, 202, 0.28);
+}
+
+button.mod-cta {
+  color: var(--kg-surface-raised);
+  font-weight: 600;
+}
+
+/* Tooltips */
+body {
+  --tooltip-background: var(--kg-surface-hover);
+  --tooltip-color:      var(--kg-fuji-white);
+  --tooltip-radius:     var(--radius-s);
+}
+
+/* ---------------------------------------------------------------------------
+   8. Callouts — study-note types and default look
+   ------------------------------------------------------------------------- */
+
+/* Callouts need bare RGB triplets, so the accent ramp is restated here. Values
+   are the same Kanagawa hues as the --kg-* hex tokens above. */
+.theme-dark {
+  --kg-rgb-blue:    127, 180, 202;
+  --kg-rgb-crystal: 126, 156, 216;
+  --kg-rgb-cyan:    163, 212, 213;
+  --kg-rgb-aqua:    122, 168, 159;
+  --kg-rgb-green:   152, 187, 108;
+  --kg-rgb-yellow:  230, 195, 132;
+  --kg-rgb-orange:  255, 158, 59;
+  --kg-rgb-red:     228, 104, 118;
+  --kg-rgb-deepred: 195, 64, 67;
+  --kg-rgb-peach:   255, 93, 98;
+  --kg-rgb-violet:  149, 127, 184;
+  --kg-rgb-gray:    114, 113, 105;
+}
+
+.theme-light {
+  --kg-rgb-blue:    77, 105, 155;
+  --kg-rgb-crystal: 77, 105, 155;
+  --kg-rgb-cyan:    94, 133, 122;
+  --kg-rgb-aqua:    94, 133, 122;
+  --kg-rgb-green:   111, 137, 78;
+  --kg-rgb-yellow:  131, 111, 74;
+  --kg-rgb-orange:  204, 109, 0;
+  --kg-rgb-red:     200, 64, 83;
+  --kg-rgb-deepred: 200, 64, 83;
+  --kg-rgb-peach:   215, 71, 75;
+  --kg-rgb-violet:  98, 76, 131;
+  --kg-rgb-gray:    138, 137, 128;
+}
+
+/* Default look: faint tinted fill, accent rail (from section 5), coloured
+   title. Body text keeps the normal ink so long callouts stay readable. */
+body {
+  --callout-title-color:   rgb(var(--callout-color));
+  --callout-title-weight:  600;
+  --callout-title-size:    0.95em;
+  --callout-content-padding: 4px 0 0 0;
+}
+
+.callout {
+  background-color: rgba(var(--callout-color), 0.07);
+}
+
+.callout-title {
+  letter-spacing: 0.01em;
+}
+
+/* Study-note types. Distinct hue per intent, all from the calm end of the ramp:
+   concept = the idea, example = seeing it, syntax = the form, gotcha = the
+   trap, review = recall prompts, tip = shortcut. */
+.callout[data-callout="concept"] {
+  --callout-color: var(--kg-rgb-blue);
+  --callout-icon:  lucide-lightbulb;
+}
+
+.callout[data-callout="example"] {
+  --callout-color: var(--kg-rgb-violet);
+  --callout-icon:  lucide-flask-conical;
+}
+
+.callout[data-callout="syntax"] {
+  --callout-color: var(--kg-rgb-yellow);
+  --callout-icon:  lucide-code-xml;
+}
+
+.callout[data-callout="gotcha"] {
+  --callout-color: var(--kg-rgb-red);
+  --callout-icon:  lucide-triangle-alert;
+}
+
+.callout[data-callout="review"] {
+  --callout-color: var(--kg-rgb-green);
+  --callout-icon:  lucide-brain;
+}
+
+.callout[data-callout="tip"] {
+  --callout-color: var(--kg-rgb-aqua);
+  --callout-icon:  lucide-zap;
+}
+
+/* ---------------------------------------------------------------------------
+   9. Properties panel
+   ------------------------------------------------------------------------- */
+
+/* Compact rows, muted keys, readable values. */
+body {
+  --metadata-gap:              2px;
+  --metadata-label-font-size:  0.8em;
+  --metadata-label-font-weight: 500;
+  --metadata-label-width:      110px;
+  --metadata-input-font-size:  0.9em;
+  --metadata-property-radius:  var(--radius-s);
+  --metadata-property-background-hover: var(--kg-surface-raised);
+}
+
+.metadata-container {
+  border-bottom: 1px solid var(--kg-surface-hover);
+  padding-bottom: 0.6em;
+  margin-bottom: 1em;
+}
+
+.metadata-properties-heading {
+  color: var(--kg-fuji-gray);
+}
+
+.metadata-property-key {
+  color: var(--kg-fuji-gray);
+  letter-spacing: 0.02em;
+}
+
+.metadata-property-icon {
+  opacity: 0.6;
+}
+
+/* Property links (topic) become pills, echoing the tag style. The text
+   property value is a contenteditable div with no value attribute in the DOM,
+   so per-status colouring (draft / to-review / mastered) is not possible here. */
+.metadata-link-inner.internal-link {
+  display: inline-block;
+  padding: 1px 9px;
+  color: var(--kg-wave-aqua-2);
+  background-color: var(--kg-surface-raised);
+  border: 1px solid var(--kg-border);
+  border-radius: 999px;
+  font-size: 0.92em;
+  font-weight: 550;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.metadata-link-inner.internal-link:hover {
+  background-color: var(--kg-wave-blue-1);
+  border-color: var(--kg-accent);
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+   10. Bases — tables, group headings, cards
+   ------------------------------------------------------------------------- */
+
+body {
+  /* Table: quiet header, row hover on the blue wash, hairline row rules. */
+  --bases-table-header-background:       var(--kg-surface-raised);
+  --bases-table-header-background-hover: var(--kg-surface-hover);
+  --bases-table-header-color:            var(--kg-carp-yellow);
+  --bases-table-header-weight:           600;
+  --bases-table-row-background-hover:    var(--kg-surface-raised);
+  --bases-table-border-color:            var(--kg-surface-hover);
+  --bases-table-container-border-radius: var(--radius-m);
+  --bases-table-font-size:               0.95em;
+
+  /* Group headings read as section labels: property name muted and small,
+     the group value (subtopic) carries the accent. */
+  --bases-group-heading-property-color:  var(--kg-fuji-gray);
+  --bases-group-heading-property-size:   0.75em;
+  --bases-group-heading-property-weight: 500;
+  --bases-group-heading-value-color:     var(--kg-spring-blue);
+  --bases-group-heading-value-size:      1em;
+  --bases-group-heading-value-weight:    600;
+
+  /* Cards */
+  --bases-cards-background:       var(--kg-surface-raised);
+  --bases-cards-radius:           var(--radius-l);
+  --bases-cards-border-width:     1px;
+  --bases-cards-shadow:           none;
+  --bases-cards-shadow-hover:     0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.bases-group-heading {
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--kg-surface-hover);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Cards lift and take the accent border on hover. */
+.bases-cards-item {
+  border-color: var(--kg-border);
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.bases-cards-item:hover {
+  border-color: var(--kg-accent);
+  transform: translateY(-2px);
+}
+
+.bases-cards-property.mod-title .bases-cards-line {
+  color: var(--kg-fuji-white);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+   11. Hub and home pages (cssclasses: hub / home)
+   ------------------------------------------------------------------------- */
+
+/* Hub title: larger, accent rule instead of the neutral H1 rule. */
+.hub h1 {
+  color: var(--kg-carp-yellow);
+  border-bottom: 2px solid var(--kg-accent);
+  margin-top: 0.4em;
+}
+
+/* The "Related: [[a]] · [[b]]" line directly under the title becomes a
+   subtle navigation row. */
+.hub .el-h1 + .el-p > p {
+  margin: 0 0 1.4em 0;
+  padding: 0.45em 0.8em;
+  color: var(--kg-fuji-gray);
+  background-color: var(--kg-surface-raised);
+  border: 1px solid var(--kg-surface-hover);
+  border-radius: var(--radius-m);
+  font-size: 0.9em;
+}
+
+/* Home is a dashboard: wider than a reading column, tighter section spacing,
+   section headings as small labels rather than chapter titles. */
+.markdown-preview-view.home,
+.markdown-source-view.home {
+  --file-line-width: 64rem;
+}
+
+.home h1 {
+  color: var(--kg-carp-yellow);
+  border-bottom: 2px solid var(--kg-accent);
+}
+
+.home h2 {
+  margin-top: 1.4em;
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--kg-fuji-gray);
+  border-bottom: 1px solid var(--kg-surface-hover);
+}
+
+/* ---------------------------------------------------------------------------
+   12. Small polish
+   ------------------------------------------------------------------------- */
+
+/* Internal links: underline on hover is set globally; add a soft transition. */
+.markdown-rendered a.internal-link {
+  transition: color 120ms ease;
+}
+
+/* ==========================================================================
+   13. Status bar — hidden (backlinks/word count/properties, Git and Copilot
+   indicators). Delete this block to bring it back.
+   ========================================================================== */
+.status-bar {
+  display: none;
+}
