@@ -3,7 +3,7 @@
 [user]
 	name = alvar.dev
 	email = alvaropedrozo07@gmail.com
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [pull]
 	rebase = false
+[url "git@github.com:"]
+	pushInsteadOf = https://github.com/

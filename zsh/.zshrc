@@ -96,3 +96,12 @@ export PATH="/home/shoot/.kimi-code/bin:$PATH"
 
 # bun completions
 [ -s "/home/shoot/.bun/_bun" ] && source "/home/shoot/.bun/_bun"
+
+# Turso
+export PATH="$PATH:/home/shoot/.turso"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/path.zsh.inc' ]; then . '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/completion.zsh.inc'; fi
