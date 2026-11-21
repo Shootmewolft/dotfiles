@@ -13,6 +13,7 @@ import Quickshell
 Column {
     id: root
     required property string categoryName
+    property string query: ""
     readonly property bool isCategorized: categoryName?.length > 0
     property int maxBindWidth: 0
     property real columnSpacing: 40
@@ -115,6 +116,13 @@ Column {
         return bind.description.indexOf(":") === -1;
     }
 
+    function matchesQuery(bind) {
+        if (root.query.length === 0) return true;
+        const mods = root.modMaskToStringList(bind.modmask).join(" ");
+        const haystack = [mods, bind.key, root.transformKey(bind.key), bind.description].join(" ").toLowerCase();
+        return haystack.includes(root.query);
+    }
+
     function containsNonFirstRepetitive(bind) {
         const key = bind.key;
         if (key.includes("mouse") || key.includes("page")) return false;
@@ -153,9 +161,9 @@ Column {
             id: repeater
             model: {
                 if (!root.isCategorized) {
-                    return HyprlandKeybinds.keybinds.filter(bind => root.hasDescription(bind) && root.isUncategorized(bind) && !root.containsNonFirstRepetitive(bind));
+                    return HyprlandKeybinds.keybinds.filter(bind => root.hasDescription(bind) && root.isUncategorized(bind) && !root.containsNonFirstRepetitive(bind) && root.matchesQuery(bind));
                 }
-                return HyprlandKeybinds.keybinds.filter(bind => root.hasDescription(bind) && root.isCategory(bind, root.categoryName) && !root.containsNonFirstRepetitive(bind));
+                return HyprlandKeybinds.keybinds.filter(bind => root.hasDescription(bind) && root.isCategory(bind, root.categoryName) && !root.containsNonFirstRepetitive(bind) && root.matchesQuery(bind));
             }
             delegate: BindLine {
                 required property var modelData

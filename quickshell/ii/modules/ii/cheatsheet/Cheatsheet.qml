@@ -18,6 +18,10 @@ Scope { // Scope
             "icon": "keyboard",
             "name": Translation.tr("Keybinds")
         },
+        {
+            "icon": "code",
+            "name": "Neovim"
+        },
     ]
 
     Loader {
@@ -27,6 +31,7 @@ Scope { // Scope
         sourceComponent: PanelWindow { // Window
             id: cheatsheetRoot
             visible: cheatsheetLoader.active
+            property string searchQuery: ""
 
             anchors {
                 top: true
@@ -43,7 +48,8 @@ Scope { // Scope
             implicitHeight: cheatsheetBackground.height + Appearance.sizes.elevationMargin * 2
             WlrLayershell.namespace: "quickshell:cheatsheet"
             // Setting this value makes it take its sweet time to open
-            // WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+            // OnDemand made it slow to open; Exclusive is needed for the search field to receive typing
+            WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
             color: "transparent"
 
             mask: Region {
@@ -80,7 +86,12 @@ Scope { // Scope
 
                 Keys.onPressed: event => { // Esc to close
                     if (event.key === Qt.Key_Escape) {
-                        cheatsheetRoot.hide();
+                        if (searchField.text.length > 0) {
+                            searchField.text = "";
+                        } else {
+                            cheatsheetRoot.hide();
+                        }
+                        event.accepted = true;
                     }
                     if (event.modifiers === Qt.ControlModifier) {
                         if (event.key === Qt.Key_PageDown) {
@@ -101,7 +112,6 @@ Scope { // Scope
 
                 RippleButton { // Close button
                     id: closeButton
-                    focus: cheatsheetRoot.visible
                     implicitWidth: 40
                     implicitHeight: 40
                     buttonRadius: Appearance.rounding.full
@@ -140,6 +150,14 @@ Scope { // Scope
                                 property alias source: swipeView.currentIndex
                             }
                         }
+                        ToolbarTextField {
+                            id: searchField
+                            focus: cheatsheetRoot.visible
+                            clip: true
+                            implicitWidth: 260
+                            placeholderText: Translation.tr("Search")
+                            onTextChanged: cheatsheetRoot.searchQuery = text.trim().toLowerCase()
+                        }
                     }
 
                     SwipeView { // Content pages
@@ -166,7 +184,12 @@ Scope { // Scope
                             }
                         }
 
-                        CheatsheetKeybinds {}
+                        CheatsheetKeybinds {
+                            query: cheatsheetRoot.searchQuery
+                        }
+                        CheatsheetVim {
+                            query: cheatsheetRoot.searchQuery
+                        }
                     }
                 }
             }
