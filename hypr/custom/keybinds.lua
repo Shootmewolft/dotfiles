@@ -24,3 +24,11 @@ hl.bind(
 -- Obsidian on SUPER+N (replaces the right sidebar toggle from hyprland/keybinds.lua)
 hl.unbind("SUPER + N")
 hl.bind("SUPER + N", hl.dsp.exec_cmd("obsidian"), { description = "App: Obsidian" })
+
+-- Hyprland 0.57: Quickshell's searchToggleRelease fires on Super release even after
+-- a SUPER+key combo. Use a native release bind instead, which only fires on a lone tap.
+-- searchToggleRelease toggles on the release event; searchToggle only reacts to press.
+hl.unbind("SUPER + SUPER_L")
+hl.unbind("SUPER + SUPER_R")
+hl.bind("SUPER_L", hl.dsp.global("quickshell:searchToggleRelease"), { release = true, description = "Shell: Toggle search" })
+hl.bind("SUPER_R", hl.dsp.global("quickshell:searchToggleRelease"), { release = true })

@@ -20,3 +20,34 @@ hl.config({
         },
     },
 })
+
+-- Hyprland 0.57 caps shadow render_power at 4 (base config used 10).
+hl.config({
+    decoration = {
+        shadow = {
+            render_power = 4,
+        },
+    },
+})
+
+-- Hyprland 0.57 hands a maximized window's state to any newly opened tiled
+-- window on the same workspace, regardless of misc.on_focus_under_fullscreen.
+-- Undo a maximize that lands on a window within ~1s of it opening, so new
+-- windows always tile. Manual maximize (SUPER+D) later is unaffected.
+local fresh_windows = {}
+hl.on("window.open", function(w)
+    fresh_windows[w.address] = os.time()
+end)
+hl.on("window.fullscreen", function(w)
+    local opened_at = fresh_windows[w.address]
+    if not opened_at then return end
+    fresh_windows[w.address] = nil
+    if os.time() - opened_at <= 1 and w.fullscreen == 1 and not w.floating then
+        hl.dispatch(hl.dsp.window.fullscreen({
+            mode = "maximized", action = "unset", window = "address:" .. w.address,
+        }))
+    end
+end)
+hl.on("window.close", function(w)
+    fresh_windows[w.address] = nil
+end)
