@@ -24,7 +24,7 @@ export PATH=/home/shoot/.opencode/bin:$PATH
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git fzf node npm zoxide)
+plugins=(git fzf node npm zoxide herdr)
 
 source "$ZSH/oh-my-zsh.sh"
 
@@ -101,7 +101,11 @@ export PATH="/home/shoot/.kimi-code/bin:$PATH"
 export PATH="$PATH:/home/shoot/.turso"
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/path.zsh.inc' ]; then . '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/home/shoot/google-cloud-sdk/path.zsh.inc' ]; then . '/home/shoot/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/shoot/Downloads/google-cloud-cli-linux-x86_64/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/home/shoot/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/shoot/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Default terminal editor
+export EDITOR=nvim
+export VISUAL=nvim
