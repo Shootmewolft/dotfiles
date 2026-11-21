@@ -1,0 +1,169 @@
+# herdr configuration (herdr 0.9.x)
+# Linked from ~/.config/herdr/config.toml. Apply edits to a running server with
+# `herdr server reload-config` (or prefix+shift+r). Validate with `herdr config check`.
+# Reference: https://herdr.dev/tui/docs/configuration/
+
+onboarding = false
+
+[theme]
+name = "kanagawa"
+auto_switch = false
+
+[theme.custom]
+# Let kitty's background opacity and Hyprland's blur show through, like Neovim.
+panel_bg = "reset"
+
+[terminal]
+# New panes, tabs and workspaces start in the directory of the pane they come from.
+new_cwd = "follow"
+
+[keys]
+# Same prefix as Zellij for muscle memory. Use the Home key to jump to the
+# start of the line in zsh, since ctrl+a is taken by the prefix.
+prefix = "ctrl+a"
+
+# Prefix-free chords on ctrl+alt (the family Herdr recommends as safe).
+# Free in kitty and in this Hyprland setup (it only uses ctrl+alt+r/t/delete).
+# The prefix versions keep working.
+focus_pane_left = ["prefix+h", "ctrl+alt+h"]
+focus_pane_down = ["prefix+j", "ctrl+alt+j"]
+focus_pane_up = ["prefix+k", "ctrl+alt+k"]
+focus_pane_right = ["prefix+l", "ctrl+alt+l"]
+previous_tab = ["prefix+p", "ctrl+alt+["]
+next_tab = ["prefix+n", "ctrl+alt+]"]
+new_tab = ["prefix+c", "ctrl+alt+c"]
+split_vertical = ["prefix+v", "ctrl+alt+d"]
+split_horizontal = ["prefix+minus", "ctrl+alt+shift+d"]
+zoom = ["prefix+z", "ctrl+alt+z"]
+
+# Jump back and forth between the last two panes.
+last_pane = "prefix+semicolon"
+
+# Agents: walk the sidebar and jump straight to agent N.
+previous_agent = "prefix+alt+k"
+next_agent = "prefix+alt+j"
+focus_agent = "prefix+alt+1..9"
+
+# Workspaces: jump straight to workspace N.
+switch_workspace = "prefix+shift+1..9"
+
+# --- Plugins ---------------------------------------------------------------
+
+# herdr-splits: Ctrl+h/j/k/l moves between Neovim splits and Herdr panes as one.
+# In a Neovim pane the key is forwarded to Neovim; elsewhere Herdr moves focus.
+# Trade-off: shells lose ctrl+l (clear, use `clear`) and ctrl+k (kill to end of line).
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "herdr-splits.nav-left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "herdr-splits.nav-down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "herdr-splits.nav-up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "herdr-splits.nav-right"
+
+# herdr-splits resize. Alt+Shift (not Alt) so LazyVim keeps Alt+j/k for moving lines.
+[[keys.command]]
+key = "alt+shift+h"
+type = "plugin_action"
+command = "herdr-splits.resize-left"
+
+[[keys.command]]
+key = "alt+shift+j"
+type = "plugin_action"
+command = "herdr-splits.resize-down"
+
+[[keys.command]]
+key = "alt+shift+k"
+type = "plugin_action"
+command = "herdr-splits.resize-up"
+
+[[keys.command]]
+key = "alt+shift+l"
+type = "plugin_action"
+command = "herdr-splits.resize-right"
+
+# Plugin manager popup (its suggested prefix+p is previous_tab).
+[[keys.command]]
+key = "prefix+alt+p"
+type = "plugin_action"
+command = "ray.plugin-manager.open"
+
+# Oh My Zsh: reload it in every idle pane (its suggested prefix+shift+r is reload_config).
+[[keys.command]]
+key = "prefix+alt+r"
+type = "plugin_action"
+command = "ohmyzsh.shell.reload-all"
+
+# lazygit in a popup over the current layout, opened in the pane's directory.
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
+
+[ui]
+# Wider sidebar (defaults: 26, max 36) so agent conversation titles fit.
+sidebar_width = 34
+sidebar_max_width = 44
+# Distinct glyphs per agent state (blocked, working, done, idle).
+status_indicators = "symbols"
+# Agent panel as an attention queue: blocked agents first.
+agent_panel_sort = "priority"
+# Show which agent runs in each split pane.
+show_agent_labels_on_pane_borders = true
+# More room for panes when a workspace has a single tab.
+hide_tab_bar_when_single_tab = true
+# Create tabs right away with a generated name (rename later with prefix+shift+t).
+prompt_new_tab_name = false
+# Status area at the right of the tab bar.
+tab_bar_right = [
+  { type = "zoom" },
+  { type = "datetime", format = "%H:%M" },
+]
+tab_bar_right_separator = " · "
+
+# Agent rows: state and agent, then the title the agent gives its own terminal
+# (Claude Code and others set it to the conversation topic), then where it lives.
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "agent", "state_text"],
+  ["terminal_title_stripped"],
+  ["workspace", "tab"],
+]
+
+# Space rows: name, branch and git status, then what the active tab is doing
+# ($topic is reported by the Auto Title plugin).
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", "workspace", "branch", "git_status"],
+  [{ token = "$topic", bold = true, dim = false }],
+]
+
+[ui.toast]
+# In-app toasts when an agent in another workspace finishes or needs input.
+# Other options: "system" (desktop notification), "terminal", "off".
+delivery = "herdr"
+
+[ui.sound]
+enabled = false
+
+[session]
+# Reopen agents (Claude Code, Codex, ...) in their own conversation after a
+# server restart. Needs the official integrations: `herdr integration status`.
+resume_agents_on_restore = true
+
+[experimental]
+# Keep recent pane screen history across full server restarts.
+pane_history = true
