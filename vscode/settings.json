@@ -314,5 +314,6 @@
   "git.blame.editorDecoration.enabled": true,
   "chat.tips.enabled": false,
   "editor.formatOnSaveMode": "modificationsIfAvailable",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "material-code.primaryColor": "#212170"
 }

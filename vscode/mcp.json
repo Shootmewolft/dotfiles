@@ -1,53 +1,64 @@
 {
-	"servers": {
-		"sequential-thinking": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"@modelcontextprotocol/server-sequential-thinking"
-			],
-			"type": "stdio"
-		},
-		"git": {
-			"command": "uvx",
-			"args": [
-				"mcp-server-git"
-			],
-			"type": "stdio"
-		},
-		"Context7": {
-			"type": "stdio",
-			"command": "npx",
-			"args": [
-				"-y",
-				"@upstash/context7-mcp@latest"
-			]
-		},
-		"next-devtools": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"next-devtools-mcp@latest"
-			],
-			"type": "stdio"
-		},
-		"io.github.github/github-mcp-server": {
-			"type": "http",
-			"url": "https://api.githubcopilot.com/mcp/",
-			"gallery": "https://api.mcp.github.com",
-			"version": "1.0.3"
-		},
-		"figma-mcp": {
-			"url": "https://mcp.figma.com/mcp",
-			"type": "http"
-		}
-	},
-	"inputs": [
-		{
-			"id": "CONTEXT7_API_KEY",
-			"type": "promptString",
-			"description": "API key for authentication",
-			"password": true
-		}
-	]
+  "inputs": [
+    {
+      "description": "API key for authentication",
+      "id": "CONTEXT7_API_KEY",
+      "password": true,
+      "type": "promptString"
+    }
+  ],
+  "servers": {
+    "Context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "command": "npx",
+      "type": "stdio"
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "engram": {
+      "args": [
+        "mcp",
+        "--tools=agent"
+      ],
+      "command": "/home/shoot/.local/bin/engram"
+    },
+    "figma-mcp": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
+    },
+    "git": {
+      "args": [
+        "mcp-server-git"
+      ],
+      "command": "uvx",
+      "type": "stdio"
+    },
+    "io.github.github/github-mcp-server": {
+      "gallery": "https://api.mcp.github.com",
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "version": "1.0.3"
+    },
+    "next-devtools": {
+      "args": [
+        "-y",
+        "next-devtools-mcp@latest"
+      ],
+      "command": "npx",
+      "type": "stdio"
+    },
+    "sequential-thinking": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "command": "npx",
+      "type": "stdio"
+    }
+  }
 }
