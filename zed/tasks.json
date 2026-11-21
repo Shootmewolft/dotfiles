@@ -1,0 +1,10 @@
+[
+  {
+    "label": "Git: AI commit + push",
+    "command": "~/.config/zed/scripts/git-ai-commit-push.sh",
+    "args": [],
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+  },
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-alt-g": ["task::Spawn", { "task_name": "Git: AI commit + push" }],
+    },
+  },
+]
