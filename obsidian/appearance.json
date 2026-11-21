@@ -9,5 +9,6 @@
   "interfaceFontFamily": "Google Sans Flex",
   "textFontFamily": "Google Sans Flex",
   "monospaceFontFamily": "IosevkaTerm NF",
-  "translucency": false
+  "translucency": false,
+  "showRibbon": true
 }
